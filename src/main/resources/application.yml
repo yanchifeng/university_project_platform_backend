@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://1.12.37.222:3306/university_project_platform_db?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456 # 你的数据库密码
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 8
+      # 连接最大存活时间
+      max-lifetime: 295000
+      # 连接在连接池中 最大的空闲时间 idle-timeout 要小于 max-lifetime
+      idle-timeout: 200000
+  data:
+    redis:
+      port: 6379
+      host: localhost
+server:
+  port: 8408
+logging:
+  level:
+    com.example: debug

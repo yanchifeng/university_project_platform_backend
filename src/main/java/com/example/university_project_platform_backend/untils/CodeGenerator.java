@@ -9,13 +9,18 @@ import java.sql.Types;
 import java.util.Collections;
 
 public class CodeGenerator {
+
+
+
     public static void main(String[] args) {
         String url="jdbc:mysql://1.12.37.222:3306/university_project_platform_db?useSSL=false&useUnicode=true&characterEncoding=utf-8";
         String username="root";
         String password = "123456";
         String moduleName = "projectPlatform";
         String mapperLocation = "D:\\Work_RJ\\java_study\\university_project_platform_backend\\src\\main\\resources\\mapper\\";
-        String tables = "mentor,project,project_management,student,student_group,user";
+        String tables = "mentor,project,project_management,student,student_group,user,Competition";
+
+
         FastAutoGenerator.create(url, username, password)
                 .globalConfig(builder -> {
                     builder.author("blackhaird") // 设置作者
@@ -38,10 +43,14 @@ public class CodeGenerator {
                             .pathInfo(Collections.singletonMap(OutputFile.xml, mapperLocation)); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude(tables) // 设置需要生成的表名
-                            .addTablePrefix(); // 设置过滤表前缀
+                    builder.addInclude(tables)
+                            .addTablePrefix()// 设置需要生成的表名
+                            .entityBuilder()
+                            .enableLombok().
+                            enableFileOverride(); // 设置过滤表前缀
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
     }
+
 }

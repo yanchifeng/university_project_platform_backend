@@ -2,7 +2,6 @@ package com.example.university_project_platform_backend.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -10,11 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author blackhaird
- * @since 2024-03-03
+ * @since 2024-03-16
  */
-@RestController
-@RequestMapping("/project")
-public class ProjectController {
-
+@Controller
+@RequestMapping("/competition")
+public class CompetitionController {
 
 }

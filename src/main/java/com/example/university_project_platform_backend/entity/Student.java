@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <p>
@@ -11,8 +13,10 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author blackhaird
- * @since 2024-03-03
+ * @since 2024-03-16
  */
+@Getter
+@Setter
 public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,82 +61,4 @@ public class Student implements Serializable {
      * 学生班级
      */
     private String studentClass;
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
-    }
-
-    public String getStudentName() {
-        return studentName;
-    }
-
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public Boolean getStudentSex() {
-        return studentSex;
-    }
-
-    public void setStudentSex(Boolean studentSex) {
-        this.studentSex = studentSex;
-    }
-
-    public LocalDateTime getStudentAdmissionTime() {
-        return studentAdmissionTime;
-    }
-
-    public void setStudentAdmissionTime(LocalDateTime studentAdmissionTime) {
-        this.studentAdmissionTime = studentAdmissionTime;
-    }
-
-    public Integer getStudentAge() {
-        return studentAge;
-    }
-
-    public void setStudentAge(Integer studentAge) {
-        this.studentAge = studentAge;
-    }
-
-    public String getStudentPhoneNumber() {
-        return studentPhoneNumber;
-    }
-
-    public void setStudentPhoneNumber(String studentPhoneNumber) {
-        this.studentPhoneNumber = studentPhoneNumber;
-    }
-
-    public String getStudentEmail() {
-        return studentEmail;
-    }
-
-    public void setStudentEmail(String studentEmail) {
-        this.studentEmail = studentEmail;
-    }
-
-    public String getStudentClass() {
-        return studentClass;
-    }
-
-    public void setStudentClass(String studentClass) {
-        this.studentClass = studentClass;
-    }
-
-    @Override
-    public String toString() {
-        return "Student{" +
-            "studentId = " + studentId +
-            ", studentName = " + studentName +
-            ", studentSex = " + studentSex +
-            ", studentAdmissionTime = " + studentAdmissionTime +
-            ", studentAge = " + studentAge +
-            ", studentPhoneNumber = " + studentPhoneNumber +
-            ", studentEmail = " + studentEmail +
-            ", studentClass = " + studentClass +
-        "}";
-    }
 }

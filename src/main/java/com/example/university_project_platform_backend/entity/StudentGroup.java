@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <p>
@@ -12,8 +14,10 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author blackhaird
- * @since 2024-03-03
+ * @since 2024-03-16
  */
+@Getter
+@Setter
 @TableName("student_group")
 public class StudentGroup implements Serializable {
 
@@ -31,6 +35,11 @@ public class StudentGroup implements Serializable {
     private String groupName;
 
     /**
+     * 创建老师ID
+     */
+    private Long groupMentorId;
+
+    /**
      * 小组队长ID
      */
     private Long groupCaptainId;
@@ -44,55 +53,4 @@ public class StudentGroup implements Serializable {
      * 小组创建时间
      */
     private LocalDateTime groupCreateTime;
-
-    public Long getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
-
-    public Long getGroupCaptainId() {
-        return groupCaptainId;
-    }
-
-    public void setGroupCaptainId(Long groupCaptainId) {
-        this.groupCaptainId = groupCaptainId;
-    }
-
-    public Long getGroupStudentId() {
-        return groupStudentId;
-    }
-
-    public void setGroupStudentId(Long groupStudentId) {
-        this.groupStudentId = groupStudentId;
-    }
-
-    public LocalDateTime getGroupCreateTime() {
-        return groupCreateTime;
-    }
-
-    public void setGroupCreateTime(LocalDateTime groupCreateTime) {
-        this.groupCreateTime = groupCreateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "StudentGroup{" +
-            "groupId = " + groupId +
-            ", groupName = " + groupName +
-            ", groupCaptainId = " + groupCaptainId +
-            ", groupStudentId = " + groupStudentId +
-            ", groupCreateTime = " + groupCreateTime +
-        "}";
-    }
 }

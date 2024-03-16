@@ -1,5 +1,23 @@
 # university_project_platform_backend
 
+* [university\_project\_platform\_backend](#university_project_platform_backend)
+* [接口文档](#接口文档)
+  * [端口说明](#端口说明)
+  * [User](#user)
+    * [/user/show](#usershow)
+    * [/user/login](#userlogin)
+    * [/user/register](#userregister)
+      * [数据冲突](#数据冲突)
+  * [Student](#student)
+    * [/student/show](#studentshow)
+    * [/student/add](#studentadd)
+    * [/student/del](#studentdel)
+    * [/student/change](#studentchange)
+  * [Mentor](#mentor)
+  * [StudentGroup](#studentgroup)
+
+[TOC]
+
 # 接口文档
 
 ## 端口说明
@@ -397,6 +415,8 @@ create table student(
 
 ## Mentor
 
+已经完成
+
 ```mysql
 create table mentor(
     mentor_id  bigint(11) auto_increment not null primary key comment '导师ID',
@@ -408,5 +428,33 @@ create table mentor(
 );
 ```
 
->接口与Student同理 代完善
+>接口与Student同理 
 
+
+
+## StudentGroup
+
+已经完成
+
+```mysql
+create table student_group(
+                              group_id bigint(11) auto_increment not null  primary key  comment '小组id',
+                              group_name varchar(40) comment '小组队名',
+                              group_mentor_id bigint(11) comment '创建老师ID',
+                              group_captain_id bigint(11)  comment '小组队长ID',
+                              group_student_id bigint(11)  comment  '组员ID',
+                              group_create_time datetime default now() comment '小组创建时间'
+);
+
+INSERT INTO student_group(group_id,group_name,group_mentor_id, group_captain_id,group_student_id)
+VALUES(22000000001,'一窝咸鱼',11001000001 ,12240020001,12240020001),
+      (22000000002,'一窝咸鱼', 11001000001 ,12240020001,12240020002),
+      (22000000003,'一窝咸鱼', 11001000002,12240020001,12240020003),
+      (22000000004,'烂泥扶不上墙', 11001000002,12240020004,12240020004);
+
+
+```
+
+
+
+> 接口与Student同理 等待权限分级

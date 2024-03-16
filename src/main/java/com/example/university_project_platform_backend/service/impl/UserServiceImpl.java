@@ -107,7 +107,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 //            wrapper.setParamAlias("2");
         }else {
             if (searchUserList.isEmpty()){
-                flag = true;
+                flag = false;
             }
         }
 

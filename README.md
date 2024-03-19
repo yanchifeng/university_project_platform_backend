@@ -483,13 +483,154 @@ create table mentor(
 }
 ```
 
+### /mentor/studentGroupSearch
 
+`post`
+
+[0.1.7]: 目前的版本是采用Json限制对mentor搜索的限制，为了安全性，后续会采用JWT的token鉴权限制。即 "groupMentorId" 字段会在后续会被<删除>
+
+```json
+//注意：[0.1.7]版本 groupMentorId 会在后续修改为 Param("token") 获取 MentorId
+//groupCaptainId 可被替换为 #投标的任意一个或多个字段（类Mysql or）
+{
+  "groupMentorId": 11001000001,
+  "groupId": 22000000003,
+  "#groupName": "一窝咸鱼",
+  "#groupCaptainId": 12240020001,
+  "#groupStudentId": 12240020003,
+  "#groupCreateTime": "2024-03-19T00:10:07"
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "groupId": 22000000001,
+        "groupName": "一窝咸鱼",
+        "groupMentorId": 11001000001,
+        "groupCaptainId": 12240020001,
+        "groupStudentId": 12240020001,
+        "groupCreateTime": "2024-03-19T00:10:07"
+      },
+      {
+        "groupId": 22000000002,
+        "groupName": "一窝咸鱼",
+        "groupMentorId": 11001000001,
+        "groupCaptainId": 12240020001,
+        "groupStudentId": 12240020002,
+        "groupCreateTime": "2024-03-19T00:10:07"
+      }
+    ]
+  }
+}
+```
+
+```json
+{
+  "code": 204,
+  "message": "查询不到该导师存在导师组",
+  "data": null
+}
+```
 
 ### /mentor/studentGroupAdd
 
 `post`
 
- 
+[0.1.7]: 目前的版本是采用Json限制对mentor搜索的限制，为了安全性，后续会采用JWT的token鉴权限制。即 "groupMentorId" 字段会在后续会被<删除>
+
+ ```json
+ {
+   "groupId": 22000000011,
+   "groupName": "测试学生组1",
+   "groupMentorId": 11001000002,
+   "groupCaptainId": 12240020001,
+   "groupStudentId": 12240020001,
+   "groupCreateTime": "2024-03-19T00:10:07"
+ }
+ ```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "groupId": 22000000011,
+        "groupName": "测试学生组1",
+        "groupMentorId": 11001000002,
+        "groupCaptainId": 12240020001,
+        "groupStudentId": 12240020001,
+        "groupCreateTime": "2024-03-19T00:10:07"
+      }
+    ]
+  }
+}
+```
+
+### /mentor/studentGroupDel
+
+`post`
+
+[0.1.7]: 目前的版本是采用Json限制对mentor搜索的限制，为了安全性，后续会采用JWT的token鉴权限制。即 "groupMentorId" 字段会在后续会被<删除>
+
+```json
+{
+  "groupId": 22000000011,
+  "groupMentorId": 11001000002
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "删除成功 [ 22000000011 ]",
+  "data": null
+}
+```
+
+### /mentor/studentGroupChange
+
+`post`
+
+原本数据 studentName 由**测试学生组1**改为**测试学生组2**
+
+[0.1.7]: 目前的版本是采用Json限制对mentor搜索的限制，为了安全性，后续会采用JWT的token鉴权限制。即 "groupMentorId" 字段会在后续会被<删除>
+
+```json
+{
+  "groupId": 22000000011,
+  "groupName": "测试学生组2",
+  "groupMentorId": 11001000002,
+  "groupCaptainId": 12240020001,
+  "groupStudentId": 12240020001,
+  "groupCreateTime": "2024-03-19T00:10:07"
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": {
+      "groupId": 22000000011,
+      "groupName": "测试学生组2",
+      "groupMentorId": 11001000002,
+      "groupCaptainId": 12240020001,
+      "groupStudentId": 12240020001,
+      "groupCreateTime": "2024-03-19T00:10:07"
+    }
+  }
+}
+```
+
+
 
 ## StudentGroup
 
@@ -519,10 +660,10 @@ VALUES(22000000001,'一窝咸鱼',11001000001 ,12240020001,12240020001),
 目前调试用，**Mentor的调试studentGroup接口请见Mentor接口说明**。
 
 ```
-/mentor/show
-/mentor/add
-/mentor/del
-/mentor/change
+/studentGroup/show
+/studentGroup/add
+/studentGroup/del
+/studentGroup/change
 接口与Student同理 
 ```
 

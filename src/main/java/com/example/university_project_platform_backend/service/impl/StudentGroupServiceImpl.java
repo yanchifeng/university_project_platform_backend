@@ -81,6 +81,27 @@ public class StudentGroupServiceImpl extends ServiceImpl<StudentGroupMapper, Stu
     }
 
     @Override
+    public Map<String, Object> studentGroupSearchByStudentGroup(StudentGroup studentGroup) {
+        Map<String,Object> studentGroupMap = new HashMap<>();
+        LambdaQueryWrapper<StudentGroup> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(StudentGroup::getGroupMentorId,studentGroup.getGroupMentorId());
+        wrapper.or(i -> i
+                .eq(StudentGroup::getGroupId,studentGroup.getGroupId())
+                .eq(StudentGroup::getGroupStudentId,studentGroup.getGroupStudentId())
+                .eq(StudentGroup::getGroupName,studentGroup.getGroupName())
+                .eq(StudentGroup::getGroupCaptainId,studentGroup.getGroupCaptainId())
+        );
+        List<StudentGroup> studentGroupList = this.list(wrapper);
+        if (!studentGroupList.isEmpty()){
+            System.out.println("success");
+            studentGroupMap.put("data",studentGroupList);
+            return studentGroupMap;
+        }else {
+            return null;
+        }
+    }
+
+    @Override
     public boolean studentGroupDeleteByMentorId(Long groupMentorId, Long groupId) {
         LambdaQueryWrapper<StudentGroup> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(StudentGroup::getGroupId, groupId);

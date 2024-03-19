@@ -114,8 +114,8 @@ public class MentorController {
     }
 
     @PostMapping("/studentGroupSearch")
-    public JsonResult<Map<String,Object>> mentorStudentGroupSearch(@RequestBody MentorStudentGroupDTO mentorStudentGroupDTO){
-        Map<String,Object> studentGroupList = iStudentGroupService.studentGroupShowByMentorId(mentorStudentGroupDTO.getGroupMentorId());
+    public JsonResult<Map<String,Object>> mentorStudentGroupSearch(@RequestBody StudentGroup studentGroup ){
+        Map<String,Object> studentGroupList = iStudentGroupService.studentGroupSearchByStudentGroup(studentGroup);
         if (studentGroupList!=null){
             System.out.println("success");
             return JsonResult.ResultSuccess(studentGroupList);

@@ -191,10 +191,6 @@ create table user(
 }
 ```
 
-
-
-#### 数据冲突
-
 ```json
 {
   "code": 403,
@@ -428,9 +424,72 @@ create table mentor(
 );
 ```
 
->接口与Student同理 
+### /mentor/show & add & del & change
+
+```
+/mentor/show
+/mentor/add
+/mentor/del
+/mentor/change
+接口与Student同理 
+```
+
+### /mentor/studentGroupShow
+
+该接口主要用于再列表中显示该导师包含多少个学生组，并不提供查询报错的功能，如需要查询报错，请使用/mentor/studentGroupSearch
+
+`post`
+
+```json
+{
+  "groupMentorId": 11001000001
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "groupId": 22000000001,
+        "groupName": "一窝咸鱼",
+        "groupMentorId": 11001000001,
+        "groupCaptainId": 12240020001,
+        "groupStudentId": 12240020001,
+        "groupCreateTime": "2024-03-19T00:10:07"
+      },
+      {
+        "groupId": 22000000002,
+        "groupName": "一窝咸鱼",
+        "groupMentorId": 11001000001,
+        "groupCaptainId": 12240020001,
+        "groupStudentId": 12240020002,
+        "groupCreateTime": "2024-03-19T00:10:07"
+      }
+    ]
+  }
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": []
+  }
+}
+```
 
 
+
+### /mentor/studentGroupAdd
+
+`post`
+
+ 
 
 ## StudentGroup
 
@@ -455,6 +514,16 @@ VALUES(22000000001,'一窝咸鱼',11001000001 ,12240020001,12240020001),
 
 ```
 
+### /studentGroup/show & add & del & change
 
+目前调试用，**Mentor的调试studentGroup接口请见Mentor接口说明**。
+
+```
+/mentor/show
+/mentor/add
+/mentor/del
+/mentor/change
+接口与Student同理 
+```
 
 > 接口与Student同理 等待权限分级

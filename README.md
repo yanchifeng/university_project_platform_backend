@@ -7,16 +7,22 @@
     * [/user/show](#usershow)
     * [/user/login](#userlogin)
     * [/user/register](#userregister)
-      * [数据冲突](#数据冲突)
   * [Student](#student)
     * [/student/show](#studentshow)
     * [/student/add](#studentadd)
     * [/student/del](#studentdel)
     * [/student/change](#studentchange)
   * [Mentor](#mentor)
+    * [/mentor/show &amp; add &amp; del &amp; change](#mentorshow--add--del--change)
+    * [/mentor/studentGroupShow](#mentorstudentgroupshow)
+    * [/mentor/studentGroupSearch](#mentorstudentgroupsearch)
+    * [/mentor/studentGroupAdd](#mentorstudentgroupadd)
+    * [/mentor/studentGroupDel](#mentorstudentgroupdel)
+    * [/mentor/studentGroupChange](#mentorstudentgroupchange)
   * [StudentGroup](#studentgroup)
+    * [/studentGroup/show &amp; add &amp; del &amp; change](#studentgroupshow--add--del--change)
 
-[TOC]
+
 
 # 接口文档
 

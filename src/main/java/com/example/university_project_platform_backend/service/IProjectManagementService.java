@@ -1,7 +1,11 @@
 package com.example.university_project_platform_backend.service;
 
+import com.example.university_project_platform_backend.common.JsonResult;
+import com.example.university_project_platform_backend.controller.dto.MentorProjectDTO;
 import com.example.university_project_platform_backend.entity.ProjectManagement;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -13,4 +17,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IProjectManagementService extends IService<ProjectManagement> {
 
+    JsonResult projectManagementSubmitByProjectMentorDTO(MentorProjectDTO mentorProjectDTO);
 }

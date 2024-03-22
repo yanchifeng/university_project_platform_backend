@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * <p>
@@ -14,10 +15,11 @@ import lombok.Setter;
  * </p>
  *
  * @author blackhaird
- * @since 2024-03-16
+ * @since 2024-03-22
  */
 @Getter
 @Setter
+@ToString
 @TableName("student_group")
 public class StudentGroup implements Serializable {
 
@@ -53,5 +55,4 @@ public class StudentGroup implements Serializable {
      * 小组创建时间
      */
     private LocalDateTime groupCreateTime;
-
 }

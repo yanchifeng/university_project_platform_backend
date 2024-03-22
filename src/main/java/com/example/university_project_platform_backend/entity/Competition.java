@@ -12,7 +12,7 @@ import lombok.Setter;
  * </p>
  *
  * @author blackhaird
- * @since 2024-03-16
+ * @since 2024-03-22
  */
 @Getter
 @Setter
@@ -21,7 +21,7 @@ public class Competition implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "Competition_id", type = IdType.AUTO)
-    private Integer competitionId;
+    private Long competitionId;
 
     private String competitionName;
 

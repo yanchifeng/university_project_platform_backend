@@ -1,5 +1,5 @@
 
-# mysql-0.1.5.sql
+# mysql-0.1.8.sql
 # create database university_project_platform_db default character set utf8mb4 collate utf8mb4_unicode_ci;
 use university_project_platform_db;
 create table mentor(
@@ -51,21 +51,19 @@ create table project(
                         project_name varchar(30) not null comment '项目姓名',
                         project_Introduction varchar(2000) comment '项目简介',
                         project_create_time datetime default now() comment '项目创建时间',
+                        project_end_time datetime comment '项目结束时间',
                         project_proposal_link varchar(255) comment '项目连接',
                         project_Creator bigint(11) not null comment '创建者ID',
                         project_Scope varchar(100) comment '项目范围',
-                        project_tag varchar(100) comment '项目标签',
+                        project_tag tinyint(1) comment '项目标签',
                         project_belong varchar(100) comment '项目归属地'
 );
 
-INSERT INTO project(project_id,project_name, project_Introduction,project_proposal_link,project_Creator,project_Scope,project_tag,project_belong)
-VALUES(31000000001,'大学生创新创业服务平台', '大学生创业创意公共服务平台是是由政府主导并投资建设的以帮助大学生就业创业为主导的公益性服务机构，是依托各级政府优惠政策及数娱广场园区资源、高校、产业、研究机构和金融机构为中心致力于打造全方位服务大学生、企业的网络服务平台。','C:\\graduation\\大学生创新创业服务平台.doc','10001001001','高校服务','校园','阳光学院');
-INSERT INTO project(project_id,project_name, project_Introduction,project_proposal_link,project_Creator,project_Scope,project_tag,project_belong)
-VALUES(31000000002,'花园宝宝电影制作', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','C:\\graduation\\花园宝宝电影制作.doc','10001001001','电影制作','校园','阳光学院');
-INSERT INTO project(project_id,project_name, project_Introduction,project_proposal_link,project_Creator,project_Scope,project_tag,project_belong)
-VALUES(31000000003,'小熊维尼图像设计', 'sbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsb','C:\\graduation\\小熊维尼图像设计.doc','10001001002','图像设计','校园','北京大学');
-INSERT INTO project(project_id,project_name, project_Introduction,project_proposal_link,project_Creator,project_Scope,project_tag,project_belong)
-VALUES(31000000004,'灰太狼大战变形金刚模型设计', 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh','C:\\graduation\\灰太狼大战变形金刚模型设计.doc','10001001003','模型设计','校园','上海交通大学');
+INSERT INTO project(project_id,project_name, project_Introduction,project_end_time,project_proposal_link,project_Creator,project_Scope,project_tag,project_belong)
+VALUES(31000000001,'大学生创新创业服务平台', '大学生创业创意公共服务平台是是由政府主导并投资建设的以帮助大学生就业创业为主导的公益性服务机构，是依托各级政府优惠政策及数娱广场园区资源、高校、产业、研究机构和金融机构为中心致力于打造全方位服务大学生、企业的网络服务平台。','2024-03-19 00:10:07','C:\\graduation\\大学生创新创业服务平台.doc','10001001001','高校服务',0,'阳光学院')
+     ,(31000000002,'花园宝宝电影制作', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','2024-03-19 00:10:07','C:\\graduation\\花园宝宝电影制作.doc','10001001001','电影制作',0,'阳光学院')
+     ,(31000000003,'小熊维尼图像设计', 'sbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsb','2024-03-19 00:10:07','C:\\graduation\\小熊维尼图像设计.doc','10001001002','图像设计',0,'北京大学')
+     ,(31000000004,'灰太狼大战变形金刚模型设计', 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh','2024-03-19 00:10:07','C:\\graduation\\灰太狼大战变形金刚模型设计.doc','10001001003','模型设计',1,'上海交通大学');
 
 create table student_group(
                               group_id bigint(11) auto_increment not null  primary key  comment '小组id',
@@ -113,22 +111,22 @@ VALUES(12240110002, 123456,2);
 
 
 CREATE TABLE Competition(
-                            Competition_id int(8) not null primary key auto_increment,
+                            Competition_id bigint(11) not null primary key auto_increment,
                             Competition_name varchar(30) not null ,
                             Competition_from varchar(255)
 );
 
-insert into Competition(competition_id, competition_name, competition_from) values (41000001 , '阳光学院竞赛处','阳光学院');
+insert into Competition(competition_id, competition_name, competition_from) values (41001000001 , '阳光学院竞赛处','阳光学院');
 
 
 create table  project_Management(
                                     project_management_id int(10) primary key auto_increment,
                                     project_id bigint(11) comment '项目编号',
                                     mentor_id bigint(11) comment '导师编号',
-                                    Competition_id int(8) comment '竞赛处id',
+                                    Competition_id bigint(11) comment '竞赛处id',
                                     Group_id bigint(11) comment '小组编号',
-                                    project_status_id TINYINT(1) not null comment '项目状态id 0代表未通过 1代表通过 2代表审核中 ',
-                                    project_status_Description varchar(50) not null  comment '项目状态状态描述 注释/备注',
+                                    project_status_id TINYINT(1) not null default 2 comment '项目状态id 0代表未通过 1代表通过 2代表审核中 ',
+                                    project_status_Description varchar(50)  default null comment '项目状态状态描述 注释/备注',
                                     foreign key (project_id) references project(project_id),
                                     foreign key (mentor_id) references  mentor(mentor_id),
                                     foreign key (Competition_id) references Competition(Competition_id),
@@ -136,4 +134,4 @@ create table  project_Management(
 );
 
 INSERT INTO project_Management(project_id,mentor_id,Competition_id, Group_id,project_status_id,project_status_Description)
-VALUES(31000000001,11001000001,41000001, 22000000001,1,'暂无'),(31000000002,11001000001,41000001, 22000000001,2,'暂无'),(31000000003,11001000001, 41000001,22000000001,2,'暂无'),(31000000004,11001000001, 41000001,22000000004,0,'缺少材料');
+VALUES(31000000001,11001000001,41001000001, 22000000001,1,'暂无'),(31000000002,11001000001,41001000001, 22000000001,2,'暂无'),(31000000003,11001000001, 41001000001,22000000001,2,'暂无'),(31000000004,11001000001, 41001000001,22000000004,0,'缺少材料');

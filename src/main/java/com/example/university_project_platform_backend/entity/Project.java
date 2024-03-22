@@ -13,7 +13,7 @@ import lombok.Setter;
  * </p>
  *
  * @author blackhaird
- * @since 2024-03-16
+ * @since 2024-03-22
  */
 @Getter
 @Setter
@@ -43,6 +43,11 @@ public class Project implements Serializable {
     private LocalDateTime projectCreateTime;
 
     /**
+     * 项目创建时间
+     */
+    private LocalDateTime projectEndTime;
+
+    /**
      * 项目连接
      */
     private String projectProposalLink;
@@ -58,9 +63,9 @@ public class Project implements Serializable {
     private String projectScope;
 
     /**
-     * 项目标签
+     * 项目标签,0就是科研项目 1则是竞赛项目
      */
-    private String projectTag;
+    private Boolean projectTag;
 
     /**
      * 项目归属地

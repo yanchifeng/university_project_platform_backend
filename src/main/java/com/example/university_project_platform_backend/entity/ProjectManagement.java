@@ -13,7 +13,7 @@ import lombok.Setter;
  * </p>
  *
  * @author blackhaird
- * @since 2024-03-16
+ * @since 2024-03-22
  */
 @Getter
 @Setter
@@ -38,7 +38,7 @@ public class ProjectManagement implements Serializable {
     /**
      * 竞赛处id
      */
-    private Integer competitionId;
+    private Long competitionId;
 
     /**
      * 小组编号

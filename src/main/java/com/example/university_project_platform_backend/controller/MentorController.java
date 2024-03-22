@@ -1,12 +1,13 @@
 package com.example.university_project_platform_backend.controller;
 
-import com.example.university_project_platform_backend.controller.dto.MentorStudentGroupDTO;
+import com.example.university_project_platform_backend.controller.dto.MentorProjectDTO;
 import com.example.university_project_platform_backend.entity.Mentor;
 import com.example.university_project_platform_backend.entity.StudentGroup;
 import com.example.university_project_platform_backend.service.IMentorService;
+import com.example.university_project_platform_backend.service.IProjectManagementService;
+import com.example.university_project_platform_backend.service.IProjectService;
 import com.example.university_project_platform_backend.service.IStudentGroupService;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.stereotype.Controller;
 
 /**
  * <p>
@@ -19,9 +20,7 @@ import org.springframework.stereotype.Controller;
 import com.example.university_project_platform_backend.common.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +39,10 @@ public class MentorController {
     private IMentorService iMentorService;
     @Autowired
     private IStudentGroupService iStudentGroupService;
-
+    @Autowired
+    private IProjectService iProjectService;
+    @Autowired
+    private IProjectManagementService iProjectManagementService;
     @PostMapping("/test")
     public JsonResult<Object> mentorTest(@RequestBody String mentorId){
         System.out.println("mentorTest Running ：" + mentorId);
@@ -136,4 +138,12 @@ public class MentorController {
             return JsonResult.ResultSuccess();
         }
     }
-}
+
+
+    @PostMapping("/projectManagementAdd")
+    public JsonResult projectManagementAdd(@RequestBody MentorProjectDTO mentorProjectDTO){
+            JsonResult jsonResult = iProjectManagementService.projectManagementSubmitByProjectMentorDTO(mentorProjectDTO);
+            return jsonResult;
+        }
+    }
+

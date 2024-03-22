@@ -19,6 +19,7 @@
     * [/mentor/studentGroupAdd](#mentorstudentgroupadd)
     * [/mentor/studentGroupDel](#mentorstudentgroupdel)
     * [/mentor/studentGroupChange](#mentorstudentgroupchange)
+    * [/mentor/projectManagementAdd](#mentorprojectmanagementadd)
   * [StudentGroup](#studentgroup)
     * [/studentGroup/show &amp; add &amp; del &amp; change](#studentgroupshow--add--del--change)
 
@@ -550,6 +551,7 @@ create table mentor(
 [0.1.7]: 目前的版本是采用Json限制对mentor搜索的限制，为了安全性，后续会采用JWT的token鉴权限制。即 "groupMentorId" 字段会在后续会被<删除>
 
  ```json
+ //注意：[0.1.7]版本 groupMentorId 会在后续修改为 Param("token") 获取 MentorId
  {
    "groupId": 22000000011,
    "groupName": "测试学生组1",
@@ -586,6 +588,7 @@ create table mentor(
 [0.1.7]: 目前的版本是采用Json限制对mentor搜索的限制，为了安全性，后续会采用JWT的token鉴权限制。即 "groupMentorId" 字段会在后续会被<删除>
 
 ```json
+//注意：[0.1.7]版本 groupMentorId 会在后续修改为 Param("token") 获取 MentorId
 {
   "groupId": 22000000011,
   "groupMentorId": 11001000002
@@ -609,6 +612,7 @@ create table mentor(
 [0.1.7]: 目前的版本是采用Json限制对mentor搜索的限制，为了安全性，后续会采用JWT的token鉴权限制。即 "groupMentorId" 字段会在后续会被<删除>
 
 ```json
+//注意：[0.1.7]版本 groupMentorId 会在后续修改为 Param("token") 获取 MentorId
 {
   "groupId": 22000000011,
   "groupName": "测试学生组2",
@@ -632,6 +636,63 @@ create table mentor(
       "groupStudentId": 12240020001,
       "groupCreateTime": "2024-03-19T00:10:07"
     }
+  }
+}
+```
+
+
+
+### /mentor/projectManagementAdd
+
+`post`
+
+该接口主要用于教师端创建项目申请流程表具体流程如下：
+
+1. 教师创建项目（project）表，将json所需要的project数据导入
+2. 并自动生成学生组，若学生组（group）ID为未使用的用户，则默认生成新的学生组，有则直接调用已有学生组
+3. 并将选定好主键数据封装到竞赛处组（competition），提交竞赛处信息申请
+4. [0.1.8]: 目前的版本是采用Json限制对mentor搜索的限制，为了安全性，后续会采用JWT的token鉴权限制。即 "mentorId" 字段会在后续会被<删除>
+
+```json
+//注意：
+//[0.1.8]版本 groupId 会在后续修改为 Param("token") 获取 MentorId
+//[0.1.8]前四个字段为必须字段
+{
+  "projectId": 31000000105,
+  "mentorId": 11001000001,
+  "competitionId": 41001000001,
+  "groupId": 22000000105,
+  
+  "projectName": "项目测试",
+  "projectIntroduction": "111",
+  "projectCreateTime": "2024-03-22T00:54:49",
+  "projectEndTime": "2024-06-20T16:38:40",
+  "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+  "projectCreator": 10001001001,
+  "projectScope": "高校服务",
+  "projectTag": false,
+  "projectBelong": "阳光学院"
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "projectId": 31000000105,
+    "projectName": "项目测试",
+    "projectIntroduction": "111",
+    "projectCreateTime": "2024-03-22T00:54:49",
+    "projectEndTime": "2024-06-20T16:38:40",
+    "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+    "projectCreator": 10001001001,
+    "projectScope": "高校服务",
+    "projectTag": false,
+    "projectBelong": "阳光学院",
+    "mentorId": 11001000001,
+    "competitionId": 41001000001,
+    "groupId": 22000000105
   }
 }
 ```

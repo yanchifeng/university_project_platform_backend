@@ -2,4 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.university_project_platform_backend.mapper.ProjectManagementMapper">
 
+    <insert id="studentGroupInsertAuto" parameterType="com.example.university_project_platform_backend.entity.StudentGroup" useGeneratedKeys="true" keyProperty="groupId" >
+        insert into student_group(group_name) values('待定')
+    </insert>
+    <insert id="studentGroupInsert" parameterType="com.example.university_project_platform_backend.entity.StudentGroup">
+        insert into student_group(group_id) values(#{groupId})
+    </insert>
+
+    <select id="studentGroupSelect"
+            resultType="com.example.university_project_platform_backend.entity.StudentGroup">
+        select * from student_group where group_id = #{group_id}
+    </select>
 </mapper>

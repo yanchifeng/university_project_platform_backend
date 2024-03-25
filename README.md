@@ -22,8 +22,12 @@
     * [/mentor/projectManagementAdd](#mentorprojectmanagementadd)
   * [StudentGroup](#studentgroup)
     * [/studentGroup/show &amp; add &amp; del &amp; change](#studentgroupshow--add--del--change)
+  * [Competition](#competition)
+    * [/competition/projectManagementAdd](#competitionprojectmanagementadd)
+    * [/competition/projectManagementShow](#competitionprojectmanagementshow)
+    * [/competition/projectManagementReview](#competitionprojectmanagementreview)
 
-
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
 
 # 接口文档
 

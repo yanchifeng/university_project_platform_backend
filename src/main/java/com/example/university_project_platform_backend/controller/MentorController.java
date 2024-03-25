@@ -140,10 +140,14 @@ public class MentorController {
     }
 
 
+    //目前
     @PostMapping("/projectManagementAdd")
-    public JsonResult projectManagementAdd(@RequestBody MentorProjectDTO mentorProjectDTO){
-            JsonResult jsonResult = iProjectManagementService.projectManagementSubmitByProjectMentorDTO(mentorProjectDTO);
+    public JsonResult<Map<String,Object>> projectManagementAdd(@RequestBody MentorProjectDTO mentorProjectDTO){
+        JsonResult<Map<String,Object>> jsonResult = iProjectManagementService.projectManagementSubmitByProjectMentorDTO(mentorProjectDTO);
             return jsonResult;
         }
     }
+
+
+
 

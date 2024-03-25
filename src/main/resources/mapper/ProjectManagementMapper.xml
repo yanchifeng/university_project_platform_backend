@@ -9,8 +9,17 @@
         insert into student_group(group_id) values(#{groupId})
     </insert>
 
-    <select id="studentGroupSelect"
-            resultType="com.example.university_project_platform_backend.entity.StudentGroup">
-        select * from student_group where group_id = #{group_id}
+<!--    <select id="studentGroupSelect"-->
+<!--            resultType="com.example.university_project_platform_backend.entity.StudentGroup">-->
+<!--        select * from student_group where group_id = #{group_id}-->
+<!--    </select>-->
+
+
+    <select id="projectManagementSelectByCompetitionId"
+            resultType="com.example.university_project_platform_backend.controller.dto.MentorProjectDTO">
+        select * from project_management,project where
+                                                     mentor_id = #{mentorId}
+                                                   or competition_id = #{competitionId}
+                                                   and project.project_id = project_management.project_id
     </select>
 </mapper>

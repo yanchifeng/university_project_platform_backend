@@ -1,7 +1,19 @@
 package com.example.university_project_platform_backend.controller;
 
+import com.example.university_project_platform_backend.common.JsonResult;
+import com.example.university_project_platform_backend.controller.dto.MentorProjectDTO;
+import com.example.university_project_platform_backend.entity.ProjectManagement;
+import com.example.university_project_platform_backend.service.ICompetitionService;
+import com.example.university_project_platform_backend.service.IProjectManagementService;
+import com.example.university_project_platform_backend.service.IProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -14,5 +26,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/competition")
 public class CompetitionController {
+    @Autowired
+    private IProjectManagementService iProjectManagementService;
+    @Autowired
+    IProjectService iProjectService;
+    @PostMapping("/projectManagementAdd")
+    public JsonResult<Map<String,Object>> projectManagementAdd(@RequestBody MentorProjectDTO mentorProjectDTO) {
+        JsonResult<Map<String,Object>> jsonResult = iProjectManagementService.projectManagementSubmitByProjectMentorDTO(mentorProjectDTO);
+        return jsonResult;
+    }
 
+
+    @PostMapping("/projectManagementShow")
+    public JsonResult<Map<String,Object>> projectManagementShow(@RequestBody MentorProjectDTO mentorProjectDTO) {
+        Map<String,Object> projectManagementMap = iProjectManagementService.projectManagementSelectByProjectMentorDTO(mentorProjectDTO);
+        return JsonResult.ResultSuccess(projectManagementMap);
+    }
+
+
+    @PostMapping("/projectManagementReview")
+    public JsonResult<Map<String,Object>> projectManagementReview(@RequestBody ProjectManagement projectManagement) {
+        Map<String,Object> projectManagementMap = iProjectManagementService.projectManagementReview(projectManagement.getCompetitionId(),projectManagement);
+        return JsonResult.ResultSuccess(projectManagementMap);
+    }
 }

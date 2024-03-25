@@ -18,4 +18,10 @@ import java.util.Map;
 public interface IProjectManagementService extends IService<ProjectManagement> {
 
     JsonResult projectManagementSubmitByProjectMentorDTO(MentorProjectDTO mentorProjectDTO);
+
+    Map<String, Object> projectManagementSelectByProjectMentorDTO(MentorProjectDTO mentorProjectDTO);
+
+    Map<String, Object> projectManagementUpdateByProjectMentorDTO(MentorProjectDTO mentorProjectDTO);
+
+    Map<String, Object> projectManagementReview(Long competitionId,ProjectManagement projectManagement);
 }

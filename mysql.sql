@@ -1,5 +1,5 @@
 
-# mysql-0.1.8.sql
+# mysql-0.1.9.sql
 # create database university_project_platform_db default character set utf8mb4 collate utf8mb4_unicode_ci;
 use university_project_platform_db;
 create table mentor(
@@ -123,14 +123,14 @@ create table  project_Management(
                                     project_management_id int(10) primary key auto_increment,
                                     project_id bigint(11) comment '项目编号',
                                     mentor_id bigint(11) comment '导师编号',
-                                    Competition_id bigint(11) comment '竞赛处id',
+                                    competition_id bigint(11) comment '竞赛处id',
                                     Group_id bigint(11) comment '小组编号',
                                     project_status_id TINYINT(1) not null default 2 comment '项目状态id 0代表未通过 1代表通过 2代表审核中 ',
                                     project_status_Description varchar(50)  default null comment '项目状态状态描述 注释/备注',
                                     foreign key (project_id) references project(project_id),
-                                    foreign key (mentor_id) references  mentor(mentor_id),
-                                    foreign key (Competition_id) references Competition(Competition_id),
-                                    foreign key  (Group_id) references  student_group(group_id)
+                                    foreign key (mentor_id) references  mentor(mentor_id)
+                                        #                                     foreign key (Competition_id) references Competition(Competition_id),
+                                    #                                     foreign key  (Group_id) references  student_group(group_id)
 );
 
 INSERT INTO project_Management(project_id,mentor_id,Competition_id, Group_id,project_status_id,project_status_Description)

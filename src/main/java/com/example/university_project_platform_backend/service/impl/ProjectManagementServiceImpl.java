@@ -1,6 +1,8 @@
 package com.example.university_project_platform_backend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.example.university_project_platform_backend.common.JsonResult;
 import com.example.university_project_platform_backend.controller.dto.MentorProjectDTO;
 import com.example.university_project_platform_backend.entity.Project;
@@ -16,6 +18,7 @@ import com.example.university_project_platform_backend.service.IStudentGroupServ
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,4 +89,42 @@ public class ProjectManagementServiceImpl extends ServiceImpl<ProjectManagementM
         }
 
     }
+
+    @Override
+    public Map<String, Object> projectManagementSelectByProjectMentorDTO(MentorProjectDTO mentorProjectDTO) {
+        Map<String,Object> projectManagementMap = new HashMap<>();
+        List<MentorProjectDTO> projectManagementList = this.baseMapper.projectManagementSelectByCompetitionId(mentorProjectDTO);
+        projectManagementMap.put("data",projectManagementList);
+        return projectManagementMap;
+    }
+
+    @Override
+    public Map<String, Object> projectManagementUpdateByProjectMentorDTO(MentorProjectDTO mentorProjectDTO) {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> projectManagementReview(Long competitionId,ProjectManagement projectManagement) {
+        Map<String,Object> projectManagementMap = new HashMap<>();
+        if (competitionId.equals(projectManagement.getCompetitionId())){
+            LambdaUpdateWrapper<ProjectManagement> projectManagementUpdateWrapper =   new LambdaUpdateWrapper<>();
+            projectManagementUpdateWrapper.set(ProjectManagement::getProjectStatusId,projectManagement.getProjectStatusId());
+            projectManagementUpdateWrapper.set(ProjectManagement::getProjectStatusDescription,projectManagement.getProjectStatusDescription());
+            projectManagementUpdateWrapper.eq(ProjectManagement::getCompetitionId,competitionId);
+            projectManagementUpdateWrapper.eq(ProjectManagement::getProjectId,projectManagement.getProjectId());
+            int projectManagementFlag = this.baseMapper.update(projectManagement,projectManagementUpdateWrapper);
+            System.out.println(projectManagementFlag);
+            if (projectManagementFlag!=0){
+                LambdaQueryWrapper<ProjectManagement> projectManagementQueryWrapper = new LambdaQueryWrapper<>();
+                projectManagementQueryWrapper.eq(ProjectManagement::getCompetitionId,competitionId);
+                projectManagementQueryWrapper.eq(ProjectManagement::getProjectId,projectManagement.getProjectId());
+                List<ProjectManagement> projectManagementList = this.list(projectManagementQueryWrapper);
+                projectManagementMap.put("data",projectManagementList);
+            }else {
+                projectManagementMap.put("data",null);
+            }
+        }
+        return projectManagementMap;
+    }
+
 }

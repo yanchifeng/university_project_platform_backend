@@ -735,3 +735,199 @@ VALUES(22000000001,'一窝咸鱼',11001000001 ,12240020001,12240020001),
 ```
 
 > 接口与Student同理 等待权限分级
+
+## Competition
+
+### /competition/projectManagementAdd
+
+`post`
+
+该接口主要用于教师端创建项目申请流程表具体流程如下：
+
+1. 教师创建项目（project）表，将json所需要的project数据导入
+2. 并自动生成学生组，若学生组（group）ID为未使用的用户，则默认生成新的学生组，有则直接调用已有学生组
+3. 并将选定好主键数据封装到竞赛处组（competition），提交竞赛处信息申请
+4. [0.1.8]: 目前的版本是采用Json限制对mentor搜索的限制，为了安全性，后续会采用JWT的token鉴权限制。即 "mentorId" 字段会在后续会被<删除>
+
+```json
+//注意：
+//[0.1.8]版本 groupId 会在后续修改为 Param("token") 获取 MentorId
+//[0.1.8]前四个字段为必须字段
+{
+  "projectId": 31000000105,
+  "mentorId": 11001000001,
+  "competitionId": 41001000001,
+  "groupId": 22000000105,
+  
+  "projectName": "项目测试",
+  "projectIntroduction": "111",
+  "projectCreateTime": "2024-03-22T00:54:49",
+  "projectEndTime": "2024-06-20T16:38:40",
+  "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+  "projectCreator": 10001001001,
+  "projectScope": "高校服务",
+  "projectTag": false,
+  "projectBelong": "阳光学院"
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "projectId": 31000000105,
+    "projectName": "项目测试",
+    "projectIntroduction": "111",
+    "projectCreateTime": "2024-03-22T00:54:49",
+    "projectEndTime": "2024-06-20T16:38:40",
+    "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+    "projectCreator": 10001001001,
+    "projectScope": "高校服务",
+    "projectTag": false,
+    "projectBelong": "阳光学院",
+    "mentorId": 11001000001,
+    "competitionId": 41001000001,
+    "groupId": 22000000105
+  }
+}
+```
+
+
+
+### /competition/projectManagementShow
+
+`post`
+
+[0.1.9]:版本 competitionId 会在后续修改为 Param(token) 获取 competitionId
+
+```json
+//[0.1.9] 后续会换成 Param(&quot;token&quot;) 获取ID
+{
+  "competitionId": 41001000001
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "projectId": 31000000001,
+        "projectName": "大学生创新创业服务平台",
+        "projectIntroduction": "大学生创业创意公共服务平台是是由政府主导并投资建设的以帮助大学生就业创业为主导的公益性服务机构，是依托各级政府优惠政策及数娱广场园区资源、高校、产业、研究机构和金融机构为中心致力于打造全方位服务大学生、企业的网络服务平台。",
+        "projectCreateTime": "2024-03-24T17:46:26",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+        "projectCreator": 10001001001,
+        "projectScope": "高校服务",
+        "projectTag": false,
+        "projectBelong": "阳光学院",
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000001
+      },
+      {
+        "projectId": 31000000002,
+        "projectName": "花园宝宝电影制作",
+        "projectIntroduction": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "projectCreateTime": "2024-03-24T17:46:26",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\花园宝宝电影制作.doc",
+        "projectCreator": 10001001001,
+        "projectScope": "电影制作",
+        "projectTag": false,
+        "projectBelong": "阳光学院",
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000001
+      },
+      {
+        "projectId": 31000000003,
+        "projectName": "小熊维尼图像设计",
+        "projectIntroduction": "sbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsb",
+        "projectCreateTime": "2024-03-24T17:46:26",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\小熊维尼图像设计.doc",
+        "projectCreator": 10001001002,
+        "projectScope": "图像设计",
+        "projectTag": false,
+        "projectBelong": "北京大学",
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000001
+      },
+      {
+        "projectId": 31000000004,
+        "projectName": "灰太狼大战变形金刚模型设计",
+        "projectIntroduction": "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+        "projectCreateTime": "2024-03-24T17:46:26",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\灰太狼大战变形金刚模型设计.doc",
+        "projectCreator": 10001001003,
+        "projectScope": "模型设计",
+        "projectTag": true,
+        "projectBelong": "上海交通大学",
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000004
+      },
+      {
+        "projectId": 31000000109,
+        "projectName": "项目测试",
+        "projectIntroduction": "111",
+        "projectCreateTime": "2024-03-22T00:54:49",
+        "projectEndTime": "2024-06-20T16:38:40",
+        "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+        "projectCreator": 10001001001,
+        "projectScope": "高校服务",
+        "projectTag": false,
+        "projectBelong": "阳光学院",
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000001
+      }
+    ]
+  }
+}
+```
+
+### /competition/projectManagementReview
+
+`post`
+
+[0.1.9]:版本 competitionId 会在后续修改为 Param(token) 获取 competitionId
+
+该接口主要用于提交项目审批
+
+```json
+{
+  "competitionId": 41001000001,
+  "projectId":31000000109,
+  "projectStatusId": 0,
+  "projectStatusDescription": "【未通过】：项目状态状态描述：0代表未通过 1代表通过 2代表审核中 "
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "projectManagementId": 5,
+        "projectId": 31000000109,
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000001,
+        "projectStatusId": false,
+        "projectStatusDescription": "【未通过】：项目状态状态描述：0代表未通过 1代表通过 2代表审核中 "
+      }
+    ]
+  }
+}
+```
+

@@ -1,8 +1,5 @@
 # university_project_platform_backend
 
-Table of Contents
-=================
-
 * [university\_project\_platform\_backend](#university_project_platform_backend)
 * [接口文档](#接口文档)
   * [端口说明](#端口说明)

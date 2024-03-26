@@ -56,6 +56,7 @@ public class CompetitionController {
 
     @PostMapping("/projectUpdate")
     public JsonResult<Map<String, Object>> projectUpdate(@RequestBody Project project) {
+        System.out.println("running");
         Long mentorId = project.getProjectCreator();
         Map<String, Object> data = iProjectService.projectUpdateByProjectCreator(mentorId, project);
         if (data != null) {

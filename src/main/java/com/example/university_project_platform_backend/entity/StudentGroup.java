@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * <p>
@@ -15,11 +14,10 @@ import lombok.ToString;
  * </p>
  *
  * @author blackhaird
- * @since 2024-03-22
+ * @since 2024-04-01
  */
 @Getter
 @Setter
-@ToString
 @TableName("student_group")
 public class StudentGroup implements Serializable {
 

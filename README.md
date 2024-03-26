@@ -34,6 +34,9 @@
     * [/competition/projectUpdate](#competitionprojectupdate)
   * [Project](#project)
     * [/project/show](#projectshow)
+  * [Credits](#credits)
+    * [/credits/show](#creditsshow)
+    * [/credits/getCredits](#creditsgetcredits)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
 
@@ -1188,6 +1191,30 @@ VALUES(22000000001,'一窝咸鱼',11001000001 ,12240020001,12240020001),
 
 ## Project
 
+```mysql
+create table project(
+                        project_id bigint(11) auto_increment not null  primary key comment '项目id',
+                        project_name varchar(30) not null comment '项目姓名',
+                        project_Introduction varchar(2000) comment '项目简介',
+                        project_create_time datetime default now() comment '项目创建时间',
+                        project_end_time datetime comment '项目结束时间',
+                        project_proposal_link varchar(255) comment '项目连接',
+                        project_Creator bigint(11) not null comment '创建者ID',
+                        project_Scope varchar(100) comment '项目范围',
+                        project_tag tinyint(1) comment '项目标签',
+                        project_belong varchar(100) comment '项目归属地'
+);
+
+INSERT INTO project(project_id,project_name, project_Introduction,project_end_time,project_proposal_link,project_Creator,project_Scope,project_tag,project_belong)
+VALUES(31000000001,'大学生创新创业服务平台', '大学生创业创意公共服务平台是是由政府主导并投资建设的以帮助大学生就业创业为主导的公益性服务机构，是依托各级政府优惠政策及数娱广场园区资源、高校、产业、研究机构和金融机构为中心致力于打造全方位服务大学生、企业的网络服务平台。','2024-03-19 00:10:07','C:\\graduation\\大学生创新创业服务平台.doc','10001001001','高校服务',0,'阳光学院')
+,(31000000002,'花园宝宝电影制作', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','2024-03-19 00:10:07','C:\\graduation\\花园宝宝电影制作.doc','10001001001','电影制作',0,'阳光学院')
+,(31000000003,'小熊维尼图像设计', 'sbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsb','2024-03-19 00:10:07','C:\\graduation\\小熊维尼图像设计.doc','10001001002','图像设计',0,'北京大学')
+,(31000000004,'灰太狼大战变形金刚模型设计', 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh','2024-03-19 00:10:07','C:\\graduation\\灰太狼大战变形金刚模型设计.doc','10001001003','模型设计',1,'上海交通大学');
+
+```
+
+
+
 ### /project/show
 
 `get`
@@ -1246,6 +1273,91 @@ VALUES(22000000001,'一窝咸鱼',11001000001 ,12240020001,12240020001),
       "projectBelong": "上海交通大学"
     }
   ]
+}
+```
+
+
+
+## Credits
+
+```json
+create table credits(
+    credits_id bigint(11) primary key  auto_increment comment '学分记录',
+    student_id bigint(11) comment '学生id',
+    credits_value int(5) not null default 0 comment '学分',
+    credits_Description varchar(255) comment '学分描述',
+    foreign key (student_id) references student(student_id)
+);
+
+insert into credits( student_id, credits_value)
+VALUES (12240020001,2),(12240020002,1),(12240110001,1),(12240120001,0);
+```
+
+
+
+### /credits/show
+
+`get`
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": [
+    {
+      "creditsId": 1,
+      "studentId": 12240020001,
+      "creditsValue": 2,
+      "creditsDescription": null
+    },
+    {
+      "creditsId": 2,
+      "studentId": 12240020002,
+      "creditsValue": 1,
+      "creditsDescription": null
+    },
+    {
+      "creditsId": 3,
+      "studentId": 12240110001,
+      "creditsValue": 1,
+      "creditsDescription": null
+    },
+    {
+      "creditsId": 4,
+      "studentId": 12240120001,
+      "creditsValue": 0,
+      "creditsDescription": null
+    }
+  ]
+}
+```
+
+
+
+### /credits/getCredits
+
+`post`
+
+```json
+{
+  "studentId": "12240020001"
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "creditsId": 1,
+        "studentId": 12240020001,
+        "creditsValue": 2,
+        "creditsDescription": null
+      }
+    ]
+  }
 }
 ```
 

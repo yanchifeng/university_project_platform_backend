@@ -16,28 +16,28 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class User implements Serializable {
+public class Credits implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户id
+     * 学分记录
      */
-    @TableId(value = "user_id", type = IdType.AUTO)
-    private Long userId;
+    @TableId(value = "credits_id", type = IdType.AUTO)
+    private Long creditsId;
 
     /**
-     * 用户姓名
+     * 学生id
      */
-    private String userName;
+    private Long studentId;
 
     /**
-     * 用户密码
+     * 学分
      */
-    private String userPassword;
+    private Integer creditsValue;
 
     /**
-     * 用户权限(管理员0 代表导师1 代表学生2)
+     * 学分描述
      */
-    private int userPermission;
+    private String creditsDescription;
 }

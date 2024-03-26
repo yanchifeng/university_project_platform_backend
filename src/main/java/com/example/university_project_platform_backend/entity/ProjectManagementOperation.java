@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,12 +18,32 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("project_management")
-public class ProjectManagement implements Serializable {
+@TableName("project_management_operation")
+public class ProjectManagementOperation implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "project_management_id", type = IdType.AUTO)
+    /**
+     * 操作记录
+     */
+    @TableId(value = "project_management_Operation_id", type = IdType.AUTO)
+    private Integer projectManagementOperationId;
+
+    /**
+     * 操作时间
+     */
+    private LocalDateTime creditsOperationTime;
+
+    /**
+     * 操作人员
+     */
+    private LocalDateTime creditsOperationOperator;
+
+    /**
+     * 0:操作失败 1：操作成功 2：其他
+     */
+    private Boolean creditsOperationStatus;
+
     private Integer projectManagementId;
 
     /**

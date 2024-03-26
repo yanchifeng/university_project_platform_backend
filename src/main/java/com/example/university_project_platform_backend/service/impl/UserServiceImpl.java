@@ -30,7 +30,6 @@ import java.util.concurrent.TimeUnit;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
     @Autowired
     private RedisTemplate redisTemplate;
-
     @Autowired
     private IStudentService iStudentService;
     @Autowired

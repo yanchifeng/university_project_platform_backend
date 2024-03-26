@@ -2,6 +2,7 @@ package com.example.university_project_platform_backend.controller;
 
 import com.example.university_project_platform_backend.common.JsonResult;
 import com.example.university_project_platform_backend.controller.dto.MentorProjectDTO;
+import com.example.university_project_platform_backend.entity.Project;
 import com.example.university_project_platform_backend.entity.ProjectManagement;
 import com.example.university_project_platform_backend.service.ICompetitionService;
 import com.example.university_project_platform_backend.service.IProjectManagementService;
@@ -39,7 +40,7 @@ public class CompetitionController {
 
     @PostMapping("/projectManagementShow")
     public JsonResult<Map<String,Object>> projectManagementShow(@RequestBody MentorProjectDTO mentorProjectDTO) {
-        Map<String,Object> projectManagementMap = iProjectManagementService.projectManagementSelectByProjectMentorDTO(mentorProjectDTO);
+        Map<String,Object> projectManagementMap = iProjectManagementService.projectManagementSelectByMentorProjectDTO(mentorProjectDTO);
         return JsonResult.ResultSuccess(projectManagementMap);
     }
 
@@ -47,6 +48,31 @@ public class CompetitionController {
     @PostMapping("/projectManagementReview")
     public JsonResult<Map<String,Object>> projectManagementReview(@RequestBody ProjectManagement projectManagement) {
         Map<String,Object> projectManagementMap = iProjectManagementService.projectManagementReview(projectManagement.getCompetitionId(),projectManagement);
+        if (projectManagementMap.get("data")==null){
+            return JsonResult.ResultFail();
+        }
         return JsonResult.ResultSuccess(projectManagementMap);
+    }
+
+    @PostMapping("/projectUpdate")
+    public JsonResult<Map<String, Object>> projectUpdate(@RequestBody Project project) {
+        Long mentorId = project.getProjectCreator();
+        Map<String, Object> data = iProjectService.projectUpdateByProjectCreator(mentorId, project);
+        if (data != null) {
+            return JsonResult.ResultSuccess(data);
+        } else {
+            return JsonResult.ResultFail();
+        }
+    }
+
+    @PostMapping("/projectManagementUpdate")
+    public JsonResult<Map<String, Object>> projectManagementUpdate(@RequestBody ProjectManagement projectManagement) {
+        Long mentorId = projectManagement.getMentorId();
+        Map<String, Object> data = iProjectManagementService.projectManagementUpdateByMentorId(mentorId, projectManagement);
+        if (data != null) {
+            return JsonResult.ResultSuccess(data);
+        } else {
+            return JsonResult.ResultFail();
+        }
     }
 }

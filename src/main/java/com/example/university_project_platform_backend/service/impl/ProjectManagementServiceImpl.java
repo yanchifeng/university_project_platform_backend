@@ -91,7 +91,7 @@ public class ProjectManagementServiceImpl extends ServiceImpl<ProjectManagementM
     }
 
     @Override
-    public Map<String, Object> projectManagementSelectByProjectMentorDTO(MentorProjectDTO mentorProjectDTO) {
+    public Map<String, Object> projectManagementSelectByMentorProjectDTO(MentorProjectDTO mentorProjectDTO) {
         Map<String,Object> projectManagementMap = new HashMap<>();
         List<MentorProjectDTO> projectManagementList = this.baseMapper.projectManagementSelectByCompetitionId(mentorProjectDTO);
         projectManagementMap.put("data",projectManagementList);
@@ -99,7 +99,17 @@ public class ProjectManagementServiceImpl extends ServiceImpl<ProjectManagementM
     }
 
     @Override
-    public Map<String, Object> projectManagementUpdateByProjectMentorDTO(MentorProjectDTO mentorProjectDTO) {
+    public Map<String, Object> projectManagementUpdateByMentorId(Long mentorId,ProjectManagement projectManagement) {
+        LambdaQueryWrapper<ProjectManagement> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ProjectManagement::getMentorId,mentorId);
+        wrapper.eq(ProjectManagement::getProjectId,projectManagement.getMentorId());
+        boolean projectManagementFlag = this.update(projectManagement,wrapper);
+        if (projectManagementFlag){
+            ProjectManagement projectManagementList = this.getOne(wrapper);
+            Map<String,Object> projectManagementMap = new HashMap<>();
+            projectManagementMap.put("data",projectManagementList);
+            return projectManagementMap;
+        }
         return null;
     }
 
@@ -125,6 +135,19 @@ public class ProjectManagementServiceImpl extends ServiceImpl<ProjectManagementM
             }
         }
         return projectManagementMap;
+    }
+
+    @Override
+    public boolean projectManagementDeleteByMentorId(Long mentorId, Long projectId) {
+        LambdaQueryWrapper<ProjectManagement> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ProjectManagement::getMentorId, mentorId);
+        wrapper.eq(ProjectManagement::getProjectId, projectId);
+        int mentorFlag = this.baseMapper.delete(wrapper);
+        if (mentorFlag!=0){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 }

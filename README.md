@@ -1,5 +1,8 @@
 # university_project_platform_backend
 
+Table of Contents
+=================
+
 * [university\_project\_platform\_backend](#university_project_platform_backend)
 * [接口文档](#接口文档)
   * [端口说明](#端口说明)
@@ -20,12 +23,20 @@
     * [/mentor/studentGroupDel](#mentorstudentgroupdel)
     * [/mentor/studentGroupChange](#mentorstudentgroupchange)
     * [/mentor/projectManagementAdd](#mentorprojectmanagementadd)
+    * [/mentor/projectManagementDel](#mentorprojectmanagementdel)
+    * [/mentor/projectManagementUpdate](#mentorprojectmanagementupdate)
+    * [/mentor/projectManagementShow](#mentorprojectmanagementshow)
+    * [/mentor/projectDel](#mentorprojectdel)
+    * [/mentor/projectUpdate](#mentorprojectupdate)
   * [StudentGroup](#studentgroup)
     * [/studentGroup/show &amp; add &amp; del &amp; change](#studentgroupshow--add--del--change)
   * [Competition](#competition)
     * [/competition/projectManagementAdd](#competitionprojectmanagementadd)
     * [/competition/projectManagementShow](#competitionprojectmanagementshow)
     * [/competition/projectManagementReview](#competitionprojectmanagementreview)
+    * [/competition/projectUpdate](#competitionprojectupdate)
+  * [Project](#project)
+    * [/project/show](#projectshow)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
 
@@ -701,6 +712,207 @@ create table mentor(
 }
 ```
 
+### /mentor/projectManagementDel
+
+`post`
+
+用于项目管理组（ProjectManagement）的删除
+
+[0.2.0]:后续看是否整合project字段的删除
+
+```json
+{
+    "projectCreator": 10001001001,
+    "projectId":31000000105
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "删除成功 [ 31000000109 ]",
+  "data": null
+}
+```
+
+### /mentor/projectManagementUpdate
+
+`post`
+
+[0.2.0]:由于权限分级关系，该接口可能在后续会被删除
+
+```json
+{
+  "projectName": "项目测试",
+  "projectIntroduction": "111",
+  "projectCreateTime": "2024-03-22T00:54:49",
+  "projectEndTime": "2024-06-20T16:38:40",
+  "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+  "projectCreator": 10001001001,
+  "projectScope": "高校服务",
+  "projectTag": false,
+  "projectBelong": "阳光学院"
+}
+```
+
+### /mentor/projectManagementShow
+
+`post`
+
+[0.1.9]:版本 mentorId 会在后续修改为 Param(token) 获取 mentorId
+
+```json
+//[0.1.9] 后续会换成 Param(&quot;token&quot;) 获取ID
+{
+  "mentorId": 41001000001
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "projectId": 31000000001,
+        "projectName": "大学生创新创业服务平台",
+        "projectIntroduction": "大学生创业创意公共服务平台是是由政府主导并投资建设的以帮助大学生就业创业为主导的公益性服务机构，是依托各级政府优惠政策及数娱广场园区资源、高校、产业、研究机构和金融机构为中心致力于打造全方位服务大学生、企业的网络服务平台。",
+        "projectCreateTime": "2024-03-24T17:46:26",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+        "projectCreator": 10001001001,
+        "projectScope": "高校服务",
+        "projectTag": false,
+        "projectBelong": "阳光学院",
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000001
+      },
+      {
+        "projectId": 31000000002,
+        "projectName": "花园宝宝电影制作",
+        "projectIntroduction": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "projectCreateTime": "2024-03-24T17:46:26",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\花园宝宝电影制作.doc",
+        "projectCreator": 10001001001,
+        "projectScope": "电影制作",
+        "projectTag": false,
+        "projectBelong": "阳光学院",
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000001
+      },
+      {
+        "projectId": 31000000003,
+        "projectName": "小熊维尼图像设计",
+        "projectIntroduction": "sbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsb",
+        "projectCreateTime": "2024-03-24T17:46:26",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\小熊维尼图像设计.doc",
+        "projectCreator": 10001001002,
+        "projectScope": "图像设计",
+        "projectTag": false,
+        "projectBelong": "北京大学",
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000001
+      },
+      {
+        "projectId": 31000000004,
+        "projectName": "灰太狼大战变形金刚模型设计",
+        "projectIntroduction": "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+        "projectCreateTime": "2024-03-24T17:46:26",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\灰太狼大战变形金刚模型设计.doc",
+        "projectCreator": 10001001003,
+        "projectScope": "模型设计",
+        "projectTag": true,
+        "projectBelong": "上海交通大学",
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000004
+      },
+      {
+        "projectId": 31000000109,
+        "projectName": "项目测试",
+        "projectIntroduction": "111",
+        "projectCreateTime": "2024-03-22T00:54:49",
+        "projectEndTime": "2024-06-20T16:38:40",
+        "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+        "projectCreator": 10001001001,
+        "projectScope": "高校服务",
+        "projectTag": false,
+        "projectBelong": "阳光学院",
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000001
+      }
+    ]
+  }
+}
+```
+
+### /mentor/projectDel
+
+```json
+{
+    "mentorId": 11001000001,
+    "projectId":31000000109
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "删除成功 [ 12240120005 ]",
+  "data": null
+}
+```
+
+
+
+### /mentor/projectUpdate
+
+`post`
+
+```json
+{
+  "projectId": 31000000001,
+  "projectName": "大学生创新创业服务平台测试版",
+  "projectIntroduction": "大学生创业创意公共服务平台是是由政府主导并投资建设的以帮助大学生就业创业为主导的公益性服务机构，是依托各级政府优惠政策及数娱广场园区资源、高校、产业、研究机构和金融机构为中心致力于打造全方位服务大学生、企业的网络服务平台。",
+  "projectCreateTime": "2024-03-26T17:09:25",
+  "projectEndTime": "2024-03-19T00:10:07",
+  "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+  "projectCreator": 10001001001,
+  "projectScope": "高校服务",
+  "projectTag": false,
+  "projectBelong": "阳光学院"
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": {
+      "projectId": 31000000001,
+      "projectName": "大学生创新创业服务平台测试版",
+      "projectIntroduction": "大学生创业创意公共服务平台是是由政府主导并投资建设的以帮助大学生就业创业为主导的公益性服务机构，是依托各级政府优惠政策及数娱广场园区资源、高校、产业、研究机构和金融机构为中心致力于打造全方位服务大学生、企业的网络服务平台。",
+      "projectCreateTime": "2024-03-26T17:09:25",
+      "projectEndTime": "2024-03-19T00:10:07",
+      "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+      "projectCreator": 10001001001,
+      "projectScope": "高校服务",
+      "projectTag": false,
+      "projectBelong": "阳光学院"
+    }
+  }
+}
+```
+
 
 
 ## StudentGroup
@@ -932,6 +1144,111 @@ VALUES(22000000001,'一窝咸鱼',11001000001 ,12240020001,12240020001),
       }
     ]
   }
+}
+```
+
+### /competition/projectUpdate
+
+`post`
+
+```json
+{
+  "projectId": 31000000001,
+  "projectName": "大学生创新创业服务平台测试版",
+  "projectIntroduction": "大学生创业创意公共服务平台是是由政府主导并投资建设的以帮助大学生就业创业为主导的公益性服务机构，是依托各级政府优惠政策及数娱广场园区资源、高校、产业、研究机构和金融机构为中心致力于打造全方位服务大学生、企业的网络服务平台。",
+  "projectCreateTime": "2024-03-26T17:09:25",
+  "projectEndTime": "2024-03-19T00:10:07",
+  "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+  "projectCreator": 10001001001,
+  "projectScope": "高校服务",
+  "projectTag": false,
+  "projectBelong": "阳光学院"
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": {
+      "projectId": 31000000001,
+      "projectName": "大学生创新创业服务平台测试版",
+      "projectIntroduction": "大学生创业创意公共服务平台是是由政府主导并投资建设的以帮助大学生就业创业为主导的公益性服务机构，是依托各级政府优惠政策及数娱广场园区资源、高校、产业、研究机构和金融机构为中心致力于打造全方位服务大学生、企业的网络服务平台。",
+      "projectCreateTime": "2024-03-26T17:09:25",
+      "projectEndTime": "2024-03-19T00:10:07",
+      "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+      "projectCreator": 10001001001,
+      "projectScope": "高校服务",
+      "projectTag": false,
+      "projectBelong": "阳光学院"
+    }
+  }
+}
+```
+
+
+
+## Project
+
+### /project/show
+
+`get`
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": [
+    {
+      "projectId": 31000000001,
+      "projectName": "大学生创新创业服务平台",
+      "projectIntroduction": "大学生创业创意公共服务平台是是由政府主导并投资建设的以帮助大学生就业创业为主导的公益性服务机构，是依托各级政府优惠政策及数娱广场园区资源、高校、产业、研究机构和金融机构为中心致力于打造全方位服务大学生、企业的网络服务平台。",
+      "projectCreateTime": "2024-03-26T17:09:25",
+      "projectEndTime": "2024-03-19T00:10:07",
+      "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+      "projectCreator": 10001001001,
+      "projectScope": "高校服务",
+      "projectTag": false,
+      "projectBelong": "阳光学院"
+    },
+    {
+      "projectId": 31000000002,
+      "projectName": "花园宝宝电影制作",
+      "projectIntroduction": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "projectCreateTime": "2024-03-26T17:09:25",
+      "projectEndTime": "2024-03-19T00:10:07",
+      "projectProposalLink": "C:\\graduation\\花园宝宝电影制作.doc",
+      "projectCreator": 10001001001,
+      "projectScope": "电影制作",
+      "projectTag": false,
+      "projectBelong": "阳光学院"
+    },
+    {
+      "projectId": 31000000003,
+      "projectName": "小熊维尼图像设计",
+      "projectIntroduction": "sbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsb",
+      "projectCreateTime": "2024-03-26T17:09:25",
+      "projectEndTime": "2024-03-19T00:10:07",
+      "projectProposalLink": "C:\\graduation\\小熊维尼图像设计.doc",
+      "projectCreator": 10001001002,
+      "projectScope": "图像设计",
+      "projectTag": false,
+      "projectBelong": "北京大学"
+    },
+    {
+      "projectId": 31000000004,
+      "projectName": "灰太狼大战变形金刚模型设计",
+      "projectIntroduction": "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+      "projectCreateTime": "2024-03-26T17:09:25",
+      "projectEndTime": "2024-03-19T00:10:07",
+      "projectProposalLink": "C:\\graduation\\灰太狼大战变形金刚模型设计.doc",
+      "projectCreator": 10001001003,
+      "projectScope": "模型设计",
+      "projectTag": true,
+      "projectBelong": "上海交通大学"
+    }
+  ]
 }
 ```
 

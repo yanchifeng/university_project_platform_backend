@@ -19,9 +19,11 @@ public interface IProjectManagementService extends IService<ProjectManagement> {
 
     JsonResult projectManagementSubmitByProjectMentorDTO(MentorProjectDTO mentorProjectDTO);
 
-    Map<String, Object> projectManagementSelectByProjectMentorDTO(MentorProjectDTO mentorProjectDTO);
+    Map<String, Object> projectManagementSelectByMentorProjectDTO(MentorProjectDTO mentorProjectDTO);
 
-    Map<String, Object> projectManagementUpdateByProjectMentorDTO(MentorProjectDTO mentorProjectDTO);
+    Map<String, Object> projectManagementUpdateByMentorId(Long mentorId,ProjectManagement projectManagement);
 
     Map<String, Object> projectManagementReview(Long competitionId,ProjectManagement projectManagement);
+
+    boolean projectManagementDeleteByMentorId(Long mentorId, Long projectId);
 }

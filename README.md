@@ -37,6 +37,10 @@
   * [Credits](#credits)
     * [/credits/show](#creditsshow)
     * [/credits/getCredits](#creditsgetcredits)
+  * [ProjectManagementOperation](#projectmanagementoperation)
+    * [/projectManagementOperation/show](#projectmanagementoperationshow)
+  * [CreditsOperation](#creditsoperation)
+    * [/creditsOperation/show](#creditsoperationshow)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
 
@@ -1361,3 +1365,18 @@ VALUES (12240020001,2),(12240020002,1),(12240110001,1),(12240120001,0);
 }
 ```
 
+## ProjectManagementOperation
+
+### /projectManagementOperation/show
+
+`get`
+
+显示操作projectManagement的数据记录
+
+## CreditsOperation
+
+### /creditsOperation/show
+
+`get`
+
+显示操作creditsOperation的数据记录

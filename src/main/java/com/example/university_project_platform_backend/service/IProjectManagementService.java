@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public interface IProjectManagementService extends IService<ProjectManagement> {
 
-    JsonResult projectManagementSubmitByProjectMentorDTO(MentorProjectDTO mentorProjectDTO);
+    Map<String, Object> projectManagementSubmitByProjectMentorDTO(MentorProjectDTO mentorProjectDTO);
 
     Map<String, Object> projectManagementSelectByMentorProjectDTO(MentorProjectDTO mentorProjectDTO);
 
@@ -26,4 +26,6 @@ public interface IProjectManagementService extends IService<ProjectManagement> {
     Map<String, Object> projectManagementReview(Long competitionId,ProjectManagement projectManagement);
 
     boolean projectManagementDeleteByMentorId(Long mentorId, Long projectId);
+
+
 }

@@ -5,9 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.example.university_project_platform_backend.common.JsonResult;
 import com.example.university_project_platform_backend.controller.dto.MentorProjectDTO;
-import com.example.university_project_platform_backend.entity.Project;
-import com.example.university_project_platform_backend.entity.ProjectManagement;
-import com.example.university_project_platform_backend.entity.StudentGroup;
+import com.example.university_project_platform_backend.entity.*;
 import com.example.university_project_platform_backend.mapper.ProjectManagementMapper;
 import com.example.university_project_platform_backend.mapper.ProjectMapper;
 import com.example.university_project_platform_backend.mapper.StudentMapper;
@@ -18,6 +16,7 @@ import com.example.university_project_platform_backend.service.IStudentGroupServ
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +37,8 @@ public class ProjectManagementServiceImpl extends ServiceImpl<ProjectManagementM
     IStudentGroupService iStudentGroupService;
 
     @Override
-    public JsonResult projectManagementSubmitByProjectMentorDTO(MentorProjectDTO mentorProjectDTO) {
+    public Map<String, Object> projectManagementSubmitByProjectMentorDTO(MentorProjectDTO mentorProjectDTO) {
+        Map<String, Object> resultMap = new HashMap<>();
         //实例化学生组与项目管理
         StudentGroup studentGroup = new StudentGroup();
         ProjectManagement projectManagement = new ProjectManagement();
@@ -63,31 +63,34 @@ public class ProjectManagementServiceImpl extends ServiceImpl<ProjectManagementM
                     projectManagement.setCompetitionId(mentorProjectDTO.getCompetitionId());
                     projectManagement.setMentorId(mentorProjectDTO.getMentorId());
                     projectManagement.setGroupId(studentGroup.getGroupId());
+
                 } else {
                     System.out.println("running:the studentGroupList != NULL");
                     if (studentGroupList.getGroupMentorId().equals(mentorProjectDTO.getMentorId())) {
+
                         projectManagement.setProjectId(mentorProjectDTO.getProjectId());
                         projectManagement.setCompetitionId(mentorProjectDTO.getCompetitionId());
                         projectManagement.setMentorId(mentorProjectDTO.getMentorId());
                         projectManagement.setGroupId(studentGroupList.getGroupId());
+
                     } else {
-                        return JsonResult.ResultFail("学生组数据创建失败，已有数据冲突学生组,或该学生组数据不属于本教师");
+                        resultMap.put("message", "学生组数据创建失败，已有数据冲突学生组,或该学生组数据不属于本教师");
                     }
                 }
                 boolean projectManagementFlag = this.save(projectManagement);
                 if (projectManagementFlag) {
-                    return JsonResult.ResultSuccess(mentorProjectDTO);
+                    resultMap.put("data", mentorProjectDTO);
                 } else {
-                    return JsonResult.ResultFail("最终数据创建失败，已有项目管理组");
+                    resultMap.put("message", "最终数据创建失败，已有项目管理组");
                 }
 
             } else {
-                return JsonResult.ResultFail("项目组数据创建失败，已有数据冲突项目组");
+                resultMap.put("message", "项目组数据创建失败，已有数据冲突项目组");
             }
         }else {
-            return JsonResult.ResultFail("项目数据创建失败，已有数据冲突项目数据或缺少重要数据");
+            resultMap.put("message", "项目数据创建失败，已有数据冲突项目数据或缺少重要数据");
         }
-
+        return resultMap;
     }
 
     @Override
@@ -149,5 +152,7 @@ public class ProjectManagementServiceImpl extends ServiceImpl<ProjectManagementM
             return false;
         }
     }
+
+
 
 }

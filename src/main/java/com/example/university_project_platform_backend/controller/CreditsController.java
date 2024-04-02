@@ -1,8 +1,10 @@
 package com.example.university_project_platform_backend.controller;
 
 import com.example.university_project_platform_backend.common.JsonResult;
+import com.example.university_project_platform_backend.controller.dto.UserCreditsDTO;
 import com.example.university_project_platform_backend.entity.Credits;
 import com.example.university_project_platform_backend.entity.Student;
+import com.example.university_project_platform_backend.service.ICreditsOperationService;
 import com.example.university_project_platform_backend.service.ICreditsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,8 @@ public class CreditsController {
 
     @Autowired
     private ICreditsService iCreditsService;
+    @Autowired
+    private ICreditsOperationService iCreditsOperationService;
 
     @GetMapping("/show")
     public JsonResult<List<Credits>> creditsShow() {
@@ -34,14 +38,18 @@ public class CreditsController {
     }
 
     @PostMapping("/add")
-    public JsonResult<Map<String, Object>> creditsAdd(@RequestBody Credits credits) {
+    public JsonResult<Map<String, Object>> creditsAdd(@RequestBody UserCreditsDTO credits) {
+        long userId = credits.getCreditsOperationOperator();
         boolean isSuccess;
+        boolean saveSuccess;
         try {
-             isSuccess = iCreditsService.save(credits);
+             isSuccess = iCreditsService.creditsAdd(userId,credits);
+             saveSuccess = iCreditsOperationService.creditsOperationAdd(userId,credits, isSuccess);
         }catch (Exception e){
             isSuccess = false;
+            saveSuccess = iCreditsOperationService.creditsOperationAdd(userId,credits, isSuccess);
         }
-        if (isSuccess) {
+        if (isSuccess&&saveSuccess) {
             return JsonResult.ResultSuccess("添加成功");
         } else {
             return JsonResult.ResultFail("添加失败");

@@ -1,5 +1,6 @@
 package com.example.university_project_platform_backend.service;
 
+import com.example.university_project_platform_backend.controller.dto.MentorProjectDTO;
 import com.example.university_project_platform_backend.entity.ProjectManagementOperation;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IProjectManagementOperationService extends IService<ProjectManagementOperation> {
 
+    boolean projectManagementOperationAdd(Long userId, MentorProjectDTO mentorProjectDTO, boolean b);
 }

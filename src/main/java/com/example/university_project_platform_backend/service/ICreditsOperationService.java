@@ -1,5 +1,6 @@
 package com.example.university_project_platform_backend.service;
 
+import com.example.university_project_platform_backend.controller.dto.UserCreditsDTO;
 import com.example.university_project_platform_backend.entity.CreditsOperation;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICreditsOperationService extends IService<CreditsOperation> {
 
+    boolean creditsOperationAdd(long userid ,UserCreditsDTO credits,boolean status);
 }

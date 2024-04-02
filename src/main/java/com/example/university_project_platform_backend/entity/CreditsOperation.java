@@ -5,12 +5,14 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.example.university_project_platform_backend.controller.dto.UserCreditsDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author blackhaird
@@ -37,7 +39,7 @@ public class CreditsOperation implements Serializable {
     /**
      * 操作人员
      */
-    private LocalDateTime creditsOperationOperator;
+    private Long creditsOperationOperator;
 
     /**
      * 0:操作失败 1：操作成功 2：其他
@@ -63,4 +65,14 @@ public class CreditsOperation implements Serializable {
      * 学分描述
      */
     private String creditsDescription;
+
+
+    public CreditsOperation(long operationOperator, boolean operationStatus, UserCreditsDTO credits) {
+        this.creditsOperationOperator = operationOperator;
+        this.creditsOperationStatus = operationStatus;
+        this.creditsId = credits.getCreditsId();
+        this.studentId = credits.getStudentId();
+        this.creditsValue = credits.getCreditsValue();
+        this.creditsDescription = credits.getCreditsDescription();
+    }
 }

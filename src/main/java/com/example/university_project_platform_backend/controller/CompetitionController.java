@@ -4,7 +4,7 @@ import com.example.university_project_platform_backend.common.JsonResult;
 import com.example.university_project_platform_backend.controller.dto.MentorProjectDTO;
 import com.example.university_project_platform_backend.entity.Project;
 import com.example.university_project_platform_backend.entity.ProjectManagement;
-import com.example.university_project_platform_backend.service.ICompetitionService;
+import com.example.university_project_platform_backend.service.IProjectManagementOperationService;
 import com.example.university_project_platform_backend.service.IProjectManagementService;
 import com.example.university_project_platform_backend.service.IProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -31,10 +30,19 @@ public class CompetitionController {
     private IProjectManagementService iProjectManagementService;
     @Autowired
     IProjectService iProjectService;
+    @Autowired
+    IProjectManagementOperationService iProjectManagementOperationService;
     @PostMapping("/projectManagementAdd")
     public JsonResult<Map<String,Object>> projectManagementAdd(@RequestBody MentorProjectDTO mentorProjectDTO) {
-        JsonResult<Map<String,Object>> jsonResult = iProjectManagementService.projectManagementSubmitByProjectMentorDTO(mentorProjectDTO);
-        return jsonResult;
+        Long userId = mentorProjectDTO.getProjectCreator();
+        Map<String,Object> projectManageMap = iProjectManagementService.projectManagementSubmitByProjectMentorDTO(mentorProjectDTO);
+        if (projectManageMap.get("data")==null){
+            iProjectManagementOperationService.projectManagementOperationAdd(userId, mentorProjectDTO,false);
+            return JsonResult.ResultFail(projectManageMap.get("message").toString());
+        }else {
+            iProjectManagementOperationService.projectManagementOperationAdd(userId, mentorProjectDTO, true);
+            return JsonResult.ResultSuccess(projectManageMap);
+        }
     }
 
 

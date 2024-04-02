@@ -1,4 +1,4 @@
-# mysql-0.2.1.sql
+# mysql-0.2.4.sql
 # create database university_project_platform_db default character set utf8mb4 collate utf8mb4_unicode_ci;
 use university_project_platform_db;
 create table mentor
@@ -156,9 +156,9 @@ create table project_Management
     competition_id             bigint(11) comment '竞赛处id',
     Group_id                   bigint(11) comment '小组编号',
     project_status_id          TINYINT(1) not null default 2 comment '项目状态id 0代表未通过 1代表通过 2代表审核中 ',
-    project_status_Description varchar(50)         default null comment '项目状态状态描述 注释/备注',
-    foreign key (project_id) references project (project_id),
-    foreign key (mentor_id) references mentor (mentor_id)
+    project_status_Description varchar(50)         default null comment '项目状态状态描述 注释/备注'
+        #     foreign key (project_id) references project (project_id),
+    #     foreign key (mentor_id) references mentor (mentor_id)
         #                                     foreign key (Competition_id) references Competition(Competition_id),
     #                                     foreign key  (Group_id) references  student_group(group_id)
 );
@@ -176,8 +176,8 @@ create table credits
     credits_id          bigint(11) primary key auto_increment comment '学分记录',
     student_id          bigint(11) comment '学生id',
     credits_value       int(5) not null default 0 comment '学分',
-    credits_Description varchar(255) comment '学分描述',
-    foreign key (student_id) references student (student_id)
+    credits_Description varchar(255) comment '学分描述'
+        #     foreign key (student_id) references student (student_id)
 );
 
 insert into credits(student_id, credits_value)
@@ -197,10 +197,10 @@ create table credits_Operation
     credits_id          bigint(11)  comment '学分记录',
     student_id          bigint(11) comment '学生id',
     credits_value       int(5) not null default 0 comment '学分',
-    credits_Description varchar(255) comment '学分描述',
+    credits_Description varchar(255) comment '学分描述'
 
-    foreign key (credits_id) references credits(credits_id),
-    foreign key (student_id) references student (student_id)
+        #     foreign key (credits_id) references credits(credits_id),
+    #     foreign key (student_id) references student (student_id)
 
 );
 
@@ -218,10 +218,10 @@ create table project_management_Operation
     competition_id             bigint(11) comment '竞赛处id',
     Group_id                   bigint(11) comment '小组编号',
     project_status_id          TINYINT(1) not null default 2 comment '项目状态id 0代表未通过 1代表通过 2代表审核中 ',
-    project_status_Description varchar(50)         default null comment '项目状态状态描述 注释/备注',
+    project_status_Description varchar(50)         default null comment '项目状态状态描述 注释/备注'
 
-    foreign key (project_management_id) references project_Management(project_management_id),
-    foreign key (project_id) references project (project_id),
-    foreign key (mentor_id) references mentor (mentor_id)
+        #     foreign key (project_management_id) references project_Management(project_management_id),
+    #     foreign key (project_id) references project (project_id),
+    #     foreign key (mentor_id) references mentor (mentor_id)
 
-)
+);

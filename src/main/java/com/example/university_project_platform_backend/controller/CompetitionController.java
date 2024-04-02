@@ -37,10 +37,10 @@ public class CompetitionController {
         Long userId = mentorProjectDTO.getProjectCreator();
         Map<String,Object> projectManageMap = iProjectManagementService.projectManagementSubmitByProjectMentorDTO(mentorProjectDTO);
         if (projectManageMap.get("data")==null){
-            iProjectManagementOperationService.projectManagementOperationAdd(userId, mentorProjectDTO,false);
+            iProjectManagementOperationService.projectManagementOperationAdd(userId, mentorProjectDTO,false,"/projectManagementAdd");
             return JsonResult.ResultFail(projectManageMap.get("message").toString());
         }else {
-            iProjectManagementOperationService.projectManagementOperationAdd(userId, mentorProjectDTO, true);
+            iProjectManagementOperationService.projectManagementOperationAdd(userId, mentorProjectDTO, true,"/projectManagementAdd");
             return JsonResult.ResultSuccess(projectManageMap);
         }
     }

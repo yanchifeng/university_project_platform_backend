@@ -14,5 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IProjectManagementOperationService extends IService<ProjectManagementOperation> {
 
-    boolean projectManagementOperationAdd(Long userId, MentorProjectDTO mentorProjectDTO, boolean b);
+    boolean projectManagementOperationAdd(Long userId, MentorProjectDTO mentorProjectDTO, boolean isSuccess ,String operationDescription);
 }

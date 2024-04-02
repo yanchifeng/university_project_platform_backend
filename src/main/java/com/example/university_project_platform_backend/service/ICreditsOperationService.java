@@ -14,5 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICreditsOperationService extends IService<CreditsOperation> {
 
-    boolean creditsOperationAdd(long userid ,UserCreditsDTO credits,boolean status);
+    boolean creditsOperationAdd(long userid ,UserCreditsDTO credits,boolean isSuccess,String operationDescription);
 }

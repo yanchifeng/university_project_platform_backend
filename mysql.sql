@@ -192,6 +192,7 @@ create table credits_Operation
     credits_operation_time     datetime        default now() comment '操作时间',
     credits_operation_Operator bigint(11)  comment '操作人员',
     credits_operation_status   tinyint(1)      default 0 comment '0:操作失败 1：操作成功 2：其他',
+    credits_operation_Description varchar(255) comment '操作描述',
 
     credits_id          bigint(11)  comment '学分记录',
     student_id          bigint(11) comment '学生id',
@@ -209,6 +210,7 @@ create table project_management_Operation
     project_management_Operation_time     datetime        default now() comment '操作时间',
     project_management_Operation_Operator bigint(11)  comment '操作人员',
     project_management_Operation_status   tinyint(1)      default 0 comment '0:操作失败 1：操作成功 2：其他',
+    project_management_Operation_Description varchar(255) comment '操作描述',
 
     project_management_id      int(10) ,
     project_id                 bigint(11) comment '项目编号',

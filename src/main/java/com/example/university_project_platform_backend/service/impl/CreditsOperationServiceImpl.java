@@ -1,6 +1,7 @@
 package com.example.university_project_platform_backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.university_project_platform_backend.controller.dto.OperationCreditsDTO;
 import com.example.university_project_platform_backend.controller.dto.UserCreditsDTO;
 import com.example.university_project_platform_backend.entity.CreditsOperation;
 import com.example.university_project_platform_backend.mapper.CreditsOperationMapper;
@@ -20,8 +21,8 @@ import org.springframework.stereotype.Service;
 public class CreditsOperationServiceImpl extends ServiceImpl<CreditsOperationMapper, CreditsOperation> implements ICreditsOperationService {
 
     @Override
-    public boolean creditsOperationAdd(long userId,UserCreditsDTO credits,boolean status) {
-        CreditsOperation creditsOperation = new CreditsOperation(userId,status,credits);
+    public boolean creditsOperationAdd(long userId,UserCreditsDTO credits,boolean isSuccess,String operationDescription) {
+        OperationCreditsDTO creditsOperation = new OperationCreditsDTO(userId,credits,isSuccess,operationDescription);
         return this.save(creditsOperation);
     }
 }

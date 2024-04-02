@@ -44,10 +44,10 @@ public class CreditsController {
         boolean saveSuccess;
         try {
              isSuccess = iCreditsService.creditsAdd(userId,credits);
-             saveSuccess = iCreditsOperationService.creditsOperationAdd(userId,credits, isSuccess);
+             saveSuccess = iCreditsOperationService.creditsOperationAdd(userId,credits, isSuccess,"/credits/add");
         }catch (Exception e){
             isSuccess = false;
-            saveSuccess = iCreditsOperationService.creditsOperationAdd(userId,credits, isSuccess);
+            saveSuccess = iCreditsOperationService.creditsOperationAdd(userId,credits, isSuccess,"/credits/add");
         }
         if (isSuccess&&saveSuccess) {
             return JsonResult.ResultSuccess("添加成功");
@@ -57,11 +57,14 @@ public class CreditsController {
     }
 
     @PostMapping("/del")
-    public JsonResult<Map<String, Object>> creditsDel(@RequestBody Credits credits) {
+    public JsonResult<Map<String, Object>> creditsDel(@RequestBody UserCreditsDTO credits) {
+        long userId = credits.getCreditsOperationOperator();
         boolean isSuccess = iCreditsService.removeById(credits.getCreditsId());
         if (isSuccess) {
+            iCreditsOperationService.creditsOperationAdd(userId,credits, isSuccess,"/credits/del");
             return JsonResult.ResultSuccess("删除成功");
         } else {
+            iCreditsOperationService.creditsOperationAdd(userId,credits, isSuccess,"/credits/del");
             return JsonResult.ResultFail("删除失败");
         }
     }

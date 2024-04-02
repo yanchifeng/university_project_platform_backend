@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import com.example.university_project_platform_backend.controller.dto.MentorProjectDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -46,6 +44,11 @@ public class ProjectManagementOperation implements Serializable {
      */
     private Boolean projectManagementOperationStatus;
 
+    /**
+     * 操作描述
+     */
+    private String projectManagementOperationDescription;
+
     private Integer projectManagementId;
 
     /**
@@ -78,20 +81,21 @@ public class ProjectManagementOperation implements Serializable {
      */
     private String projectStatusDescription;
 
-    public ProjectManagementOperation(long operator, ProjectManagement projectManagement, boolean status) {
-        this.projectManagementOperationOperator = operator;
-        this.projectManagementOperationStatus = status;
-
-        // 假设MentorProjectDTO有相应的属性映射
-        this.projectManagementId = projectManagement.getProjectManagementId();
-        this.projectId = projectManagement.getProjectId();
-        this.mentorId = projectManagement.getMentorId();
-        this.competitionId = projectManagement.getCompetitionId();
-        this.groupId = projectManagement.getGroupId();
-        this.projectStatusId = projectManagement.getProjectStatusId();
-        this.projectStatusDescription = projectManagement.getProjectStatusDescription();
-
-        // 注意：projectManagementOperationId 属性可能是自动生成的，所以在这里不设置
-    }
-
+//    public ProjectManagementOperation(long operator, ProjectManagement projectManagement, boolean status, String operationDescription) {
+//        this.projectManagementOperationOperator = operator;
+//        this.projectManagementOperationStatus = status;
+//        this.projectStatusDescription = operationDescription;
+////        this.projectManagementOperationTime = operationTime == null ? LocalDateTime.now() : operationTime;
+//
+//        // 假设MentorProjectDTO有相应的属性映射
+//        this.projectManagementId = projectManagement.getProjectManagementId();
+//        this.projectId = projectManagement.getProjectId();
+//        this.mentorId = projectManagement.getMentorId();
+//        this.competitionId = projectManagement.getCompetitionId();
+//        this.groupId = projectManagement.getGroupId();
+//        this.projectStatusId = projectManagement.getProjectStatusId();
+//        this.projectStatusDescription = projectManagement.getProjectStatusDescription();
+//
+//        // 注意：projectManagementOperationId 属性可能是自动生成的，所以在这里不设置
+//    }
 }

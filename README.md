@@ -1380,3 +1380,9 @@ VALUES (12240020001,2),(12240020002,1),(12240110001,1),(12240120001,0);
 `get`
 
 显示操作creditsOperation的数据记录
+
+## /chatService/{loginName}
+
+参考自【[杨不易呀](https://blog.csdn.net/GenuineYangbuyi)】https://blog.csdn.net/fisherish/article/details/129188244
+
+具体调用逻辑看文件APP.VUE

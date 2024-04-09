@@ -137,6 +137,14 @@ INSERT INTO user(user_name, user_password, user_Permission)
 VALUES (12240110002, 123456, 2);
 
 
+create table websocket(
+                          websocket_id int primary key  auto_increment,
+                          websocket_user_id bigint(11) not null ,
+                          websocket_forUser varchar(255) ,
+                          websocket_message text,
+                          websocket_time datetime default now()
+);
+
 CREATE TABLE Competition
 (
     Competition_id   bigint(11)  not null primary key auto_increment,
@@ -225,3 +233,4 @@ create table project_management_Operation
     #     foreign key (mentor_id) references mentor (mentor_id)
 
 );
+

@@ -14,7 +14,7 @@ import lombok.Setter;
  * </p>
  *
  * @author blackhaird
- * @since 2024-04-02
+ * @since 2024-04-10
  */
 @Getter
 @Setter
@@ -68,6 +68,4 @@ public class CreditsOperation implements Serializable {
      * 学分描述
      */
     private String creditsDescription;
-
-
 }

@@ -14,7 +14,7 @@ import lombok.Setter;
  * </p>
  *
  * @author blackhaird
- * @since 2024-04-02
+ * @since 2024-04-10
  */
 @Getter
 @Setter
@@ -80,22 +80,4 @@ public class ProjectManagementOperation implements Serializable {
      * 项目状态状态描述 注释/备注
      */
     private String projectStatusDescription;
-
-//    public ProjectManagementOperation(long operator, ProjectManagement projectManagement, boolean status, String operationDescription) {
-//        this.projectManagementOperationOperator = operator;
-//        this.projectManagementOperationStatus = status;
-//        this.projectStatusDescription = operationDescription;
-////        this.projectManagementOperationTime = operationTime == null ? LocalDateTime.now() : operationTime;
-//
-//        // 假设MentorProjectDTO有相应的属性映射
-//        this.projectManagementId = projectManagement.getProjectManagementId();
-//        this.projectId = projectManagement.getProjectId();
-//        this.mentorId = projectManagement.getMentorId();
-//        this.competitionId = projectManagement.getCompetitionId();
-//        this.groupId = projectManagement.getGroupId();
-//        this.projectStatusId = projectManagement.getProjectStatusId();
-//        this.projectStatusDescription = projectManagement.getProjectStatusDescription();
-//
-//        // 注意：projectManagementOperationId 属性可能是自动生成的，所以在这里不设置
-//    }
 }

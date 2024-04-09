@@ -44,11 +44,13 @@
         socket.send(contentText);
     }
     function sendMessageFor() {
+        let userId = document.getElementById("userId").value
         let contentText = document.getElementById('contentText').value
         let forId = document.getElementById('for').value
         const websocketUser = {
-            userId: forId,
-            massage: contentText // Assuming 'massage' is the correct property name in your WebSocketUser class
+            websocketUserId : userId,
+            websocketForuser: forId,
+            websocketMessage: contentText // Assuming 'massage' is the correct property name in your WebSocketUser class
         };
         $.ajax({
             method: 'POST',

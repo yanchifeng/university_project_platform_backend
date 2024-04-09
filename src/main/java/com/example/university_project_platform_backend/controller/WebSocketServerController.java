@@ -1,11 +1,16 @@
 package com.example.university_project_platform_backend.controller;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.example.university_project_platform_backend.common.JsonResult;
 import com.example.university_project_platform_backend.entity.WebSocketUser;
+import com.example.university_project_platform_backend.entity.Websocket;
 import com.example.university_project_platform_backend.service.IWebSocketServer;
 import com.example.university_project_platform_backend.service.impl.WebSocketServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
@@ -35,10 +40,18 @@ public class WebSocketServerController {
 
 
     @PostMapping("/sendForUser")
-    public void sendForUser(@RequestBody WebSocketUser WebSocketUser){
-        System.out.println(WebSocketUser.toString());
-        String userId = WebSocketUser.getUserId();
-        String message = WebSocketUser.getMassage();
-        iWebSocketServer.sendMessageForUser(userId,message);
+    public JsonResult<Map<String, Object>> sendForUser(@RequestBody Websocket webSocketUser){
+        System.out.println(webSocketUser.toString());
+        webSocketUser.setWebsocketTime(LocalDateTime.now());
+        Map<String,Object> keys =iWebSocketServer.sendMessageForUser(webSocketUser);
+        return JsonResult.ResultSuccess(keys);
+    }
+
+
+    @PostMapping("/getMessage")
+    public JsonResult<Map<String, Object>> sendForAll(@RequestBody Websocket webSocketUser){
+        Map<String,Object> keys =iWebSocketServer.getWebSocketUserMap();
+        System.out.println(keys.size());
+        return JsonResult.ResultSuccess(keys);
     }
 }

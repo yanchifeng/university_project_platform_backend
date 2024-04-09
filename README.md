@@ -41,6 +41,10 @@
     * [/projectManagementOperation/show](#projectmanagementoperationshow)
   * [CreditsOperation](#creditsoperation)
     * [/creditsOperation/show](#creditsoperationshow)
+  * [ChatService](#chatservice)
+    * [/chatService/\{loginName\}](#chatserviceloginname)
+    * [/chatServer/sendForUser](#chatserversendforuser)
+    * [/chatServer/getMessage](#chatservergetmessage)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
 
@@ -1383,7 +1387,7 @@ VALUES (12240020001,2),(12240020002,1),(12240110001,1),(12240120001,0);
 
 ## ChatService
 
-## /chatService/{loginName}
+### /chatService/{loginName}
 
 参考自【[杨不易呀](https://blog.csdn.net/GenuineYangbuyi)】https://blog.csdn.net/fisherish/article/details/129188244
 
@@ -1391,10 +1395,20 @@ VALUES (12240020001,2),(12240020002,1),(12240110001,1),(12240120001,0);
 
 具体调用逻辑看文件APP.HTML
 
-## /chatServer/sendForUser
+### /chatServer/sendForUser
+
+**具体调用逻辑看文件APP.HTML**
+
+`post`
 
 ```java
-$.ajax({
+//具体调用逻辑看文件APP.HTML
+const websocketUser = {
+            websocketUserId : userId,
+            websocketForuser: forId,
+            websocketMessage: contentText // Assuming 'massage' is the correct property name in your WebSocketUser class
+        };
+        $.ajax({
             method: 'POST',
             url: 'http://localhost:8408/chatServer/sendForUser', // Adjust the URL according to your actual endpoint
             contentType: 'application/json',
@@ -1406,5 +1420,40 @@ $.ajax({
                 alert('Error sending message: ' + error);
             }
         });
+```
+
+```
+返回相关数据JSON
+```
+
+### /chatServer/getMessage
+
+`post`
+
+
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "websocketId": 9,
+        "websocketUserId": 10,
+        "websocketForuser": "11",
+        "websocketMessage": "hello websocket",
+        "websocketTime": "2024-04-10T02:50:32.0011129"
+      },
+      {
+        "websocketId": 10,
+        "websocketUserId": 11,
+        "websocketForuser": "10",
+        "websocketMessage": "hello websocket",
+        "websocketTime": "2024-04-10T02:50:35.3171622"
+      }
+    ]
+  }
+}
 ```
 

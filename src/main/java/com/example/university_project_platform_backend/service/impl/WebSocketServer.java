@@ -1,21 +1,21 @@
 package com.example.university_project_platform_backend.service.impl;
 
-import com.alibaba.fastjson2.JSONObject;
+import com.example.university_project_platform_backend.common.JsonResult;
+import com.example.university_project_platform_backend.entity.WebSocketUser;
+import com.example.university_project_platform_backend.entity.Websocket;
 import com.example.university_project_platform_backend.service.IWebSocketServer;
+import com.example.university_project_platform_backend.service.IWebsocketService;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
-import java.net.http.WebSocket;
-import java.util.Map;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
@@ -39,6 +39,20 @@ public class WebSocketServer implements IWebSocketServer {
      */
     private Session session;
     private String userId = "";
+
+
+    private static final List<Websocket> webSocketUserList = new ArrayList<>();
+
+    @Autowired
+    private IWebsocketService iWebsocketService;
+
+
+    public Map<String, Object> getWebSocketUserMap() {
+        System.out.println("running:getWebSocketUserMap");
+        Map<String, Object> webSocketUserMap = new HashMap<>();
+        webSocketUserMap.put("data", webSocketUserList);
+        return webSocketUserMap;
+    }
     /**
      * 连接建立成功调用的方法
      */
@@ -78,7 +92,7 @@ public class WebSocketServer implements IWebSocketServer {
         log.info("收到客户端消息 -> {}",message);
         //服务端收到客户端的消息并推送给客户端
 //        sendMessage(message);
-        sendMessageForUser(userId,message);
+//        sendMessageForUser(userId,message);
     }
     /**
      * 发生错误时调用
@@ -111,16 +125,30 @@ public class WebSocketServer implements IWebSocketServer {
         WebSocketServer.onlineCount.getAndDecrement();
     }
 
-    public void sendMessageForUser(String userId,String message){
-        System.out.println("sendMessageForUser"+ userId);
-        if(sessionMap.containsKey(userId)){
-            Session session = sessionMap.get(userId);
+    public Map<String,Object> sendMessageForUser(Websocket webSocketUser){
+        Map<String,Object> sendMessageForUserMap = new HashMap<>();
+        String forUserId = webSocketUser.getWebsocketForuser();
+        String message = webSocketUser.getWebsocketMessage();
+        webSocketUser.setWebsocketTime(LocalDateTime.now());
+        if(sessionMap.containsKey(forUserId)){
+            Session session = sessionMap.get(forUserId);
             try {
-                System.out.println("发送给"+ userId);
+                webSocketUserList.add(webSocketUser);
+                boolean websocketFlag = iWebsocketService.save(webSocketUser);
                 session.getBasicRemote().sendText(message);
+                for (int i = 0; i < webSocketUserList.size(); i++) {
+                    System.out.println(webSocketUserList.get(i).toString());
+                }
+                if (websocketFlag){
+                    log.info("发送成功");
+                    sendMessageForUserMap.put("data",webSocketUserList);
+                    return sendMessageForUserMap;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        return sendMessageForUserMap;
     }
+
 }

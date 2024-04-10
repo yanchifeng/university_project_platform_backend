@@ -96,6 +96,13 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.13.0</version> <!-- 请确保版本与项目中其他Jackson依赖保持一致 -->
+        </dependency>
+
+
     </dependencies>
 
     <build>

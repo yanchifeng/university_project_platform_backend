@@ -1,6 +1,5 @@
 package com.example.university_project_platform_backend.service;
 
-import com.example.university_project_platform_backend.entity.WebSocketUser;
 import com.example.university_project_platform_backend.entity.Websocket;
 import jakarta.websocket.Session;
 
@@ -17,4 +16,6 @@ public interface IWebSocketServer {
     Map<String, Object> sendMessageForUser(Websocket webSocketUser);
 
     Map<String, Object> getWebSocketUserMap();
+
+    Map<String, Object> sendMessageForUserList(Websocket webSocketUser);
 }

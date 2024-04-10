@@ -34,6 +34,8 @@
     * [/competition/projectUpdate](#competitionprojectupdate)
   * [Project](#project)
     * [/project/show](#projectshow)
+    * [/project/projectSearch](#projectprojectsearch)
+    * [/project/getProjectNew](#projectgetprojectnew)
   * [Credits](#credits)
     * [/credits/show](#creditsshow)
     * [/credits/getCredits](#creditsgetcredits)
@@ -44,7 +46,10 @@
   * [ChatService](#chatservice)
     * [/chatService/\{loginName\}](#chatserviceloginname)
     * [/chatServer/sendForUser](#chatserversendforuser)
+    * [/chatServer/sendForUserList](#chatserversendforuserlist)
     * [/chatServer/getMessage](#chatservergetmessage)
+  * [HomePage](#homepage)
+    * [/studentGroup/show &amp; add &amp; del &amp; change](#studentgroupshow--add--del--change-1)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
 
@@ -1286,6 +1291,30 @@ VALUES(31000000001,'大学生创新创业服务平台', '大学生创业创意�
 
 
 
+### /project/projectSearch
+
+`post`
+
+```json
+//以下展示的为搜索项，可随意删改
+{
+      "projectId": 31000000001,
+      "projectName": "大学生创新创业服务平台",
+      "projectCreator": 10001001001,
+      "projectScope": "高校服务",
+      "projectTag": false,
+      "projectBelong": "阳光学院"
+    }
+```
+
+
+
+### /project/getProjectNew
+
+`get` 获取记录最新的10条数据
+
+
+
 ## Credits
 
 ```json
@@ -1403,6 +1432,7 @@ VALUES (12240020001,2),(12240020002,1),(12240110001,1),(12240120001,0);
 
 ```java
 //具体调用逻辑看文件APP.HTML
+//本主要逻辑是userId向forId发送消息，内容是contentText
 const websocketUser = {
             websocketUserId : userId,
             websocketForuser: forId,
@@ -1420,17 +1450,110 @@ const websocketUser = {
                 alert('Error sending message: ' + error);
             }
         });
-```
 
 ```
-返回相关数据JSON
+
+```json
+//与此同时forId账号端收到消息
+//其中的11是UserId（发送方） 10为（接收方）
+{
+  "websocketId": null,
+  "websocketUserId": 11,
+  "websocketForuser": "10",
+  "websocketMessage": "hello websocket",
+  "websocketTime": "2024-04-11T02:18:02.7112744",
+  "userList": null
+}
+```
+
+```json
+//发送方收到接口放回数据（用于聊天记录展示）
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "websocketId": 20,
+        "websocketUserId": 10,
+        "websocketForuser": "11",
+        "websocketMessage": "hello websocket",
+        "websocketTime": "2024-04-11T02:21:12.4894101",
+        "userList": null
+      },
+      {
+        "websocketId": 20,
+        "websocketUserId": 10,
+        "websocketForuser": "11",
+        "websocketMessage": "hello websocket",
+        "websocketTime": "2024-04-11T02:21:12.4894101",
+        "userList": null
+      }
+    ]
+  }
+}
+```
+
+### /chatServer/sendForUserList
+
+`post`
+
+与 /chatServer/sendForUser 接口同理
+
+将其中发送的forId修改为以逗号为分界的字符串 `,` ，如下
+
+```
+11,12
+```
+
+后端通过，分割账号id数据，发送给账号11和12
+
+```json
+//与此同时forId账号端收到消息
+//其中的11是UserId（发送方） 10,12为（接收方）
+{
+  "websocketId": null,
+  "websocketUserId": 11,
+  "websocketForuser": "10,12",
+  "websocketMessage": "hello websocket",
+  "websocketTime": "2024-04-11T02:18:02.7112744",
+  "userList": null
+}
+```
+
+```json
+//发送方收到接口放回数据（用于聊天记录展示）
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "websocketId": 20,
+        "websocketUserId": 10,
+        "websocketForuser": "11,12",
+        "websocketMessage": "hello websocket",
+        "websocketTime": "2024-04-11T02:21:12.4894101",
+        "userList": null
+      },
+      {
+        "websocketId": 20,
+        "websocketUserId": 10,
+        "websocketForuser": "11,12",
+        "websocketMessage": "hello websocket",
+        "websocketTime": "2024-04-11T02:21:12.4894101",
+        "userList": null
+      }
+    ]
+  }
+}
 ```
 
 ### /chatServer/getMessage
 
 `post`
 
-
+用户获取当前聊天数据
 
 ```json
 {
@@ -1457,3 +1580,30 @@ const websocketUser = {
 }
 ```
 
+## HomePage
+
+```mysql
+create table home_page(
+    home_page_id int auto_increment primary key ,
+    home_page_title varchar(255) not null ,
+    home_page_context text ,
+    home_page_create_time datetime default now(),
+    home_page_Creator bigint(11),
+    home_page_Creator_name varchar(255),
+    home_page_tag varchar(20)
+)
+```
+
+
+
+### /studentGroup/show & add & del & change
+
+```
+/homePage/show
+/homePage/add
+/homePage/del
+/homePage/change
+接口与Student同理 
+```
+
+> 接口与Student同理 无需权限分级

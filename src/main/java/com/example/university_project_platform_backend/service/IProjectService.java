@@ -18,4 +18,8 @@ public interface IProjectService extends IService<Project> {
     Map<String, Object> projectUpdateByProjectCreator(Long ProjectCreatorId, Project project);
 
     boolean projectDeleteByProjectCreator(Long mentorId, Long projectId);
+
+    Map<String, Object> projectSearchByProject(Project project);
+
+    Map<String, Object> getProjectNew();
 }

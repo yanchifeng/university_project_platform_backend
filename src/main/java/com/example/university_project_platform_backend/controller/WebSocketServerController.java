@@ -44,6 +44,7 @@ public class WebSocketServerController {
         System.out.println(webSocketUser.toString());
         webSocketUser.setWebsocketTime(LocalDateTime.now());
         Map<String,Object> keys =iWebSocketServer.sendMessageForUser(webSocketUser);
+        System.out.println(keys.get("data"));
         return JsonResult.ResultSuccess(keys);
     }
 
@@ -52,6 +53,14 @@ public class WebSocketServerController {
     public JsonResult<Map<String, Object>> sendForAll(@RequestBody Websocket webSocketUser){
         Map<String,Object> keys =iWebSocketServer.getWebSocketUserMap();
         System.out.println(keys.size());
+        return JsonResult.ResultSuccess(keys);
+    }
+
+    @PostMapping("/sendForUserList")
+    public JsonResult<Map<String, Object>> sendForUserList(@RequestBody WebSocketUser webSocketUser){
+        System.out.println(webSocketUser.toString());
+        webSocketUser.setWebsocketTime(LocalDateTime.now());
+        Map<String,Object> keys =iWebSocketServer.sendMessageForUserList(webSocketUser);
         return JsonResult.ResultSuccess(keys);
     }
 }

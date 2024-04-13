@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.university_project_platform_backend.mapper.ProjectMapper">
+    <select id="getStudentsProjectByStudentId"  resultType="com.example.university_project_platform_backend.entity.Project">
+        select student.student_id, student_name, project.project_id, project_name
+        from project,
+             project_management,
+             student_group,
+             student
+        where project_management.Group_id = student_group.group_id
+          and project.project_id = project_management.project_id
+          and student_group.group_student_id = student_id
+          and student.student_id = #{studentId};
+
+    </select>
+    <select id="getProjectWithStudentMentorData"
+            resultType="com.example.university_project_platform_backend.entity.Project">
+        select project.project_id,
+               project_name,
+               project_scope,
+               project_introduction,
+               project_create_time,
+               project_end_time,
+               project_proposal_link,
+               project_creator,
+               project_tag,
+               project_belong,
+               student_group.group_id,
+               student_group.group_name,
+               mentor.mentor_id,
+               mentor_name
+        from project,
+             project_management,mentor,student_group
+        where project_management.project_id = project.project_id and project_management.Group_id = student_group.group_id and project_management.mentor_id = mentor.mentor_id;
+
+    </select>
+
 
 </mapper>

@@ -2,6 +2,7 @@ package com.example.university_project_platform_backend.controller;
 
 import com.example.university_project_platform_backend.common.JsonResult;
 import com.example.university_project_platform_backend.entity.Student;
+import com.example.university_project_platform_backend.service.IProjectService;
 import com.example.university_project_platform_backend.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,8 @@ import java.util.Map;
 public class StudentController {
     @Autowired
     private IStudentService iStudentService;
+    @Autowired
+    private IProjectService iProjectService;
 
     @PostMapping("/test")
     public JsonResult<Object> studentTest(@RequestBody String studentId){
@@ -60,6 +63,26 @@ public class StudentController {
     @PostMapping("/change")
     public JsonResult<Map<String,Object>> studentChange(@RequestBody Student student){
         Map<String,Object> data = iStudentService.studentUpdate(student);
+        if (data!=null){
+            return JsonResult.ResultSuccess(data);
+        }else {
+            return JsonResult.ResultFail();
+        }
+    }
+
+    @PostMapping("/showStudentProject")
+    public JsonResult<Map<String,Object>> studentShowStudentProject(@RequestBody Student student){
+        Map<String,Object> data = iProjectService.getStudentsProjectByStudentId(student.getStudentId());
+        if (data!=null){
+            return JsonResult.ResultSuccess(data);
+        }else {
+            return JsonResult.ResultFail();
+        }
+    }
+
+    @PostMapping("/showStudentMentor")
+    public JsonResult<Map<String,Object>> studentShowStudentTeacher(@RequestBody Student student){
+        Map<String,Object> data = iStudentService.getStudentTeacherByStudentId(student.getStudentId());
         if (data!=null){
             return JsonResult.ResultSuccess(data);
         }else {

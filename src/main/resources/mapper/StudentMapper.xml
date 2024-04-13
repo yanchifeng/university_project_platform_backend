@@ -2,5 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.university_project_platform_backend.mapper.StudentMapper">
 
-
+    <select id="getStudentTeacherByStudentId"
+            resultType="com.example.university_project_platform_backend.entity.Student">
+        select student_id, student_name, mentor_id, mentor_name
+        from student_group,
+             student,
+             mentor
+        where student_group.group_student_id = student.student_id
+          and student_group.group_mentor_id = mentor.mentor_id
+          and student.student_id = #{studentId};
+    </select>
 </mapper>

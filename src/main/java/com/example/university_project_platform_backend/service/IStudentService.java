@@ -20,4 +20,6 @@ public interface IStudentService extends IService<Student> {
     boolean studentDelete(Long studentID);
 
     Map<String,Object> studentUpdate(Student student);
+
+    Map<String, Object> getStudentTeacherByStudentId(Long studentId);
 }

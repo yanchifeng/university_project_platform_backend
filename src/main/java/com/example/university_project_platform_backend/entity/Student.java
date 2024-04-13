@@ -61,4 +61,9 @@ public class Student implements Serializable {
      * 学生班级
      */
     private String studentClass;
+
+
+    private Long mentorId;
+
+    private String mentorName;
 }

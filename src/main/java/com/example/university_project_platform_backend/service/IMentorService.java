@@ -21,4 +21,6 @@ public interface IMentorService extends IService<Mentor> {
     boolean mentorDelete(long mentorID);
 
     Map<String,Object> mentorUpdate(Mentor mentor);
+
+    Map<String, Object> getStudentTeacherByStudentId(Long mentorId);
 }

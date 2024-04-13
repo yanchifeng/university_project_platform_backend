@@ -48,7 +48,7 @@ public class ProjectManagement implements Serializable {
     /**
      * 项目状态id 0代表未通过 1代表通过 2代表审核中 
      */
-    private Boolean projectStatusId;
+    private int projectStatusId;
 
     /**
      * 项目状态状态描述 注释/备注

@@ -3,6 +3,7 @@
 * [university\_project\_platform\_backend](#university_project_platform_backend)
 * [接口文档](#接口文档)
   * [端口说明](#端口说明)
+  * [版本说明](#版本说明)
   * [User](#user)
     * [/user/show](#usershow)
     * [/user/login](#userlogin)
@@ -12,6 +13,7 @@
     * [/student/add](#studentadd)
     * [/student/del](#studentdel)
     * [/student/change](#studentchange)
+    * [/student/showStudentMentor](#studentshowstudentmentor)
   * [Mentor](#mentor)
     * [/mentor/show &amp; add &amp; del &amp; change](#mentorshow--add--del--change)
     * [/mentor/studentGroupShow](#mentorstudentgroupshow)
@@ -25,6 +27,8 @@
     * [/mentor/projectManagementShow](#mentorprojectmanagementshow)
     * [/mentor/projectDel](#mentorprojectdel)
     * [/mentor/projectUpdate](#mentorprojectupdate)
+    * [/mentor/showMentorStudent](#mentorshowmentorstudent)
+    * [/mentor/projectManagementSearch](#mentorprojectmanagementsearch)
   * [StudentGroup](#studentgroup)
     * [/studentGroup/show &amp; add &amp; del &amp; change](#studentgroupshow--add--del--change)
   * [Competition](#competition)
@@ -36,6 +40,7 @@
     * [/project/show](#projectshow)
     * [/project/projectSearch](#projectprojectsearch)
     * [/project/getProjectNew](#projectgetprojectnew)
+    * [/project/showWithData](#projectshowwithdata)
   * [Credits](#credits)
     * [/credits/show](#creditsshow)
     * [/credits/getCredits](#creditsgetcredits)
@@ -63,6 +68,21 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
 | Springboot端口 | 8408 | 后端端口，数据用json |
 | mysql数据库    | 3306 | 数据库端口           |
 | Redis          | 6379 | localhost            |
+
+| 设备       | 版本     | 说明 |
+| ---------- | -------- | ---- |
+| JDK        | 21       |      |
+| Maven      | 3.9.5    |      |
+| Springboot | 3.1.0    |      |
+| Redis      | 5.0.14.1 |      |
+| Mysql      | 5.7.36   |      |
+|            |          |      |
+
+## 版本说明
+
+
+
+
 
 ## User
 
@@ -443,6 +463,43 @@ create table student(
 ```
 
 >此处判断逻辑待修改
+
+### /student/showStudentMentor
+
+`post`
+
+与/mentor/showMentorStudent逻辑同理
+
+```json
+{
+  "studentId": 12240020001
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "studentId": 12240020001,
+        "studentName": "张三",
+        "studentSex": null,
+        "studentAdmissionTime": null,
+        "studentAge": null,
+        "studentPhoneNumber": null,
+        "studentEmail": null,
+        "studentClass": null,
+        "mentorId": 11001000001,
+        "mentorName": "猴赛雷"
+      }
+    ]
+  }
+}
+```
+
+
 
 ## Mentor
 
@@ -926,6 +983,82 @@ create table mentor(
 }
 ```
 
+### /mentor/showMentorStudent
+
+`post`
+
+```json
+{
+  "studentId": "12240020001"
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "studentId": 12240020001,
+        "studentName": "张三",
+        "studentSex": null,
+        "studentAdmissionTime": null,
+        "studentAge": null,
+        "studentPhoneNumber": null,
+        "studentEmail": null,
+        "studentClass": null,
+        "mentorId": 11001000001,
+        "mentorName": "猴赛雷"
+      }
+    ]
+  }
+}
+
+```
+
+### /mentor/projectManagementSearch
+
+`post`
+
+```json
+//还可以使用
+//还可以结合 CompetitionId  GroupId   ProjectId 等限制条件混合查询
+{
+  "mentorId": 11001000001,
+  "projectStatusId": 2
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "projectManagementId": 2,
+        "projectId": 31000000002,
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000001,
+        "projectStatusId": 2,
+        "projectStatusDescription": "暂无"
+      },
+      {
+        "projectManagementId": 3,
+        "projectId": 31000000003,
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000001,
+        "projectStatusId": 2,
+        "projectStatusDescription": "暂无"
+      }
+    ]
+  }
+}
+```
+
 
 
 ## StudentGroup
@@ -1312,6 +1445,95 @@ VALUES(31000000001,'大学生创新创业服务平台', '大学生创业创意�
 ### /project/getProjectNew
 
 `get` 获取记录最新的10条数据
+
+### /project/showWithData
+
+`get`
+
+显示项目详情的接口 添加个学生 老师信息名字
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "projectId": 31000000001,
+        "projectName": "大学生创新创业服务平台",
+        "projectIntroduction": "大学生创业创意公共服务平台是是由政府主导并投资建设的以帮助大学生就业创业为主导的公益性服务机构，是依托各级政府优惠政策及数娱广场园区资源、高校、产业、研究机构和金融机构为中心致力于打造全方位服务大学生、企业的网络服务平台。",
+        "projectCreateTime": "2024-04-13T02:00:40",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+        "projectCreator": 10001001001,
+        "projectScope": "高校服务",
+        "projectTag": false,
+        "projectBelong": "阳光学院",
+        "groupId": 22000000001,
+        "groupName": "一窝咸鱼",
+        "mentorId": 11001000001,
+        "mentorName": "猴赛雷",
+        "studentId": null,
+        "studentName": null
+      },
+      {
+        "projectId": 31000000002,
+        "projectName": "花园宝宝电影制作",
+        "projectIntroduction": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "projectCreateTime": "2024-04-13T02:00:40",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\花园宝宝电影制作.doc",
+        "projectCreator": 10001001001,
+        "projectScope": "电影制作",
+        "projectTag": false,
+        "projectBelong": "阳光学院",
+        "groupId": 22000000001,
+        "groupName": "一窝咸鱼",
+        "mentorId": 11001000001,
+        "mentorName": "猴赛雷",
+        "studentId": null,
+        "studentName": null
+      },
+      {
+        "projectId": 31000000003,
+        "projectName": "小熊维尼图像设计",
+        "projectIntroduction": "sbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsb",
+        "projectCreateTime": "2024-04-13T02:00:40",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\小熊维尼图像设计.doc",
+        "projectCreator": 10001001002,
+        "projectScope": "图像设计",
+        "projectTag": false,
+        "projectBelong": "北京大学",
+        "groupId": 22000000001,
+        "groupName": "一窝咸鱼",
+        "mentorId": 11001000001,
+        "mentorName": "猴赛雷",
+        "studentId": null,
+        "studentName": null
+      },
+      {
+        "projectId": 31000000004,
+        "projectName": "灰太狼大战变形金刚模型设计",
+        "projectIntroduction": "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+        "projectCreateTime": "2024-04-13T02:00:40",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\灰太狼大战变形金刚模型设计.doc",
+        "projectCreator": 10001001003,
+        "projectScope": "模型设计",
+        "projectTag": true,
+        "projectBelong": "上海交通大学",
+        "groupId": 22000000004,
+        "groupName": "烂泥扶不上墙",
+        "mentorId": 11001000001,
+        "mentorName": "猴赛雷",
+        "studentId": null,
+        "studentName": null
+      }
+    ]
+  }
+}
+```
 
 
 

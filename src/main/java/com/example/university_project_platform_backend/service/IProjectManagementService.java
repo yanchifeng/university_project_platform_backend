@@ -28,4 +28,6 @@ public interface IProjectManagementService extends IService<ProjectManagement> {
     boolean projectManagementDeleteByMentorId(Long mentorId, Long projectId);
 
 
+
+    Map<String, Object> projectManagementSearchByMentorProjectDTO(ProjectManagement projectManagement);
 }

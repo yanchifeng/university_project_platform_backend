@@ -34,7 +34,7 @@ public class Mentor implements Serializable {
     /**
      * 导师职称(辅导员1 教师2 系副主任3 系主任4 副院长5 院长6)
      */
-    private Boolean mentorProfessionalId;
+    private int mentorProfessionalId;
 
     /**
      * 导师性别(男1 女2)

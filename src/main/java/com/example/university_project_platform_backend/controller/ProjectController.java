@@ -53,4 +53,15 @@ public class ProjectController {
             return JsonResult.ResultFail("查询不到该导师存在导师组");
         }
     }
+
+    @GetMapping("/showWithData")
+    public JsonResult<Map<String, Object>> projectShowWithData() {
+        Map<String, Object> studentGroupList = iProjectService.getProjectWithStudentMentorData();
+        if (studentGroupList != null) {
+            System.out.println("success");
+            return JsonResult.ResultSuccess(studentGroupList);
+        } else {
+            return JsonResult.ResultFail("查询不到该导师存在导师组");
+        }
+    }
 }

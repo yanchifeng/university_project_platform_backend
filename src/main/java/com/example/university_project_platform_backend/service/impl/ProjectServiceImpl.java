@@ -84,4 +84,22 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, Project> impl
         }
         return projectMap;
     }
+
+    @Override
+    public Map<String, Object> getStudentsProjectByStudentId(Long studentId) {
+
+        Map<String, Object> studentMap = new HashMap<>();
+        List<Project> projectList = this.baseMapper.getStudentsProjectByStudentId(studentId);
+        studentMap.put("data", projectList);
+        return studentMap;
+    }
+
+    @Override
+    public Map<String, Object> getProjectWithStudentMentorData() {
+        Map<String, Object> projectMap = new HashMap<>();
+        List<Project> projectList = this.baseMapper.getProjectWithStudentMentorData();
+        projectMap.put("data",projectList);
+        return projectMap;
+    }
+
 }

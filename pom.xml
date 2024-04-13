@@ -75,14 +75,14 @@
             <version>3.10.3</version>
         </dependency>
 
-        <!-- 热部署 -->
-        <!--        SpringBoot部署		-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
-            <scope>true</scope>
-        </dependency>
+<!--        &lt;!&ndash; 热部署 &ndash;&gt;-->
+<!--        &lt;!&ndash;        SpringBoot部署		&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-devtools</artifactId>-->
+<!--            <optional>true</optional>-->
+<!--            <scope>true</scope>-->
+<!--        </dependency>-->
 
         <!--        SpringBoot WebSocket		-->
         <dependency>

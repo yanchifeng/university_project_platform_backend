@@ -1,4 +1,4 @@
-# mysql-0.2.4.sql
+# mysql-0.2.8.sql
 # create database university_project_platform_db default character set utf8mb4 collate utf8mb4_unicode_ci;
 use university_project_platform_db;
 create table mentor
@@ -234,3 +234,12 @@ create table project_management_Operation
 
 );
 
+create table home_page(
+                          home_page_id int auto_increment primary key ,
+                          home_page_title varchar(255) not null ,
+                          home_page_context text ,
+                          home_page_create_time datetime default now(),
+                          home_page_Creator bigint(11),
+                          home_page_Creator_name varchar(255),
+                          home_page_tag varchar(20)
+)

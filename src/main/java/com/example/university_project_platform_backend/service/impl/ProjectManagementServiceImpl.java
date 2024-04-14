@@ -153,6 +153,40 @@ public class ProjectManagementServiceImpl extends ServiceImpl<ProjectManagementM
         }
     }
 
+    @Override
+    public Map<String, Object> projectManagementSearchByMentorProjectDTO(ProjectManagement projectManagement) {
+        Map<String,Object> projectMap = new HashMap<>();
+        LambdaQueryWrapper<ProjectManagement> wrapper = new LambdaQueryWrapper<>();
+        if (projectManagement.getMentorId() != null) {
+            wrapper.eq(ProjectManagement::getMentorId, projectManagement.getMentorId());
+        }
+        if (projectManagement.getCompetitionId() != null) {
+            wrapper.eq(ProjectManagement::getCompetitionId, projectManagement.getCompetitionId());
+        }
+        if (projectManagement.getGroupId() != null) {
+            wrapper.eq(ProjectManagement::getGroupId, projectManagement.getGroupId());
+        }
+        if (projectManagement.getProjectId() != null) {
+            wrapper.eq(ProjectManagement::getProjectId, projectManagement.getProjectId());
+        }
+        if (projectManagement.getProjectStatusId() != 0) {
+            wrapper.eq(ProjectManagement::getProjectStatusId, projectManagement.getProjectStatusId());
+        }
+
+//                .eq(Project::getProjectProposalLink,project.getProjectProposalLink())
+//                .eq(Project::getProjectEndTime,project.getProjectEndTime())
+//                .eq(Project::getProjectCreateTime,project.getProjectCreateTime())
+//                .eq(Project::getProjectIntroduction,project.getProjectIntroduction())
+
+        System.out.println("!!11");
+        List<ProjectManagement> projectList = this.list(wrapper);
+        if (!projectList.isEmpty()){
+            projectMap.put("data",projectList);
+            return projectMap;
+        }else {
+            return null;
+        }
+    }
 
 
 }

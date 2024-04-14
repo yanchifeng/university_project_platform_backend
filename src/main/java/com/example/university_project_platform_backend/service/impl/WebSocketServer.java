@@ -5,6 +5,9 @@ import com.example.university_project_platform_backend.entity.WebSocketUser;
 import com.example.university_project_platform_backend.entity.Websocket;
 import com.example.university_project_platform_backend.service.IWebSocketServer;
 import com.example.university_project_platform_backend.service.IWebsocketService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,7 +43,7 @@ public class WebSocketServer implements IWebSocketServer {
      */
     private Session session;
     private String userId = "";
-
+    ObjectMapper mapper = new ObjectMapper();
 
     private static final List<Websocket> webSocketUserList = new ArrayList<>();
 
@@ -126,6 +130,8 @@ public class WebSocketServer implements IWebSocketServer {
     }
 
     public Map<String,Object> sendMessageForUser(Websocket webSocketUser){
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
+        mapper.registerModule(new JavaTimeModule());
         Map<String,Object> sendMessageForUserMap = new HashMap<>();
         String forUserId = webSocketUser.getWebsocketForuser();
         String message = webSocketUser.getWebsocketMessage();
@@ -133,15 +139,17 @@ public class WebSocketServer implements IWebSocketServer {
         if(sessionMap.containsKey(forUserId)){
             Session session = sessionMap.get(forUserId);
             try {
+                sendMessageForUserMap.put("data",webSocketUserList);
                 webSocketUserList.add(webSocketUser);
+                String messageStringMapper = mapper.writeValueAsString(webSocketUser);
+                session.getBasicRemote().sendText(messageStringMapper);
+//                for (int i = 0; i < webSocketUserList.size(); i++) {
+//                    System.out.println(webSocketUserList.get(i).toString());
+//                }
                 boolean websocketFlag = iWebsocketService.save(webSocketUser);
-                session.getBasicRemote().sendText(message);
-                for (int i = 0; i < webSocketUserList.size(); i++) {
-                    System.out.println(webSocketUserList.get(i).toString());
-                }
+                System.out.println("Flag:"+websocketFlag);
                 if (websocketFlag){
                     log.info("发送成功");
-                    sendMessageForUserMap.put("data",webSocketUserList);
                     return sendMessageForUserMap;
                 }
             } catch (IOException e) {
@@ -149,6 +157,37 @@ public class WebSocketServer implements IWebSocketServer {
             }
         }
         return sendMessageForUserMap;
+    }
+
+    public Map<String,Object> sendMessageForUserList(Websocket webSocketUser){
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
+        mapper.registerModule(new JavaTimeModule());
+        Map<String,Object> sendMessageForUserMap = new HashMap<>();
+        List<String> forUserList = Arrays.asList(webSocketUser.getWebsocketForuser().split(","));
+        for (int i = 0; i < forUserList.size(); i++) {
+            String forUserId = forUserList.get(i);
+            System.out.println("forUserId:"+forUserId);
+            if(sessionMap.containsKey(forUserId)){
+                Session session = sessionMap.get(forUserId);
+                try {
+                    webSocketUser.setWebsocketTime(LocalDateTime.now());
+                    webSocketUserList.add(webSocketUser);
+                    sendMessageForUserMap.put("data",webSocketUserList);
+                    String messageStringMapper = mapper.writeValueAsString(webSocketUser);
+                    session.getBasicRemote().sendText(messageStringMapper);
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        boolean websocketFlag = iWebsocketService.save(webSocketUser);
+        if (websocketFlag){
+            return sendMessageForUserMap;
+        }else {
+            return (Map<String, Object>) sendMessageForUserMap.put("message","发送失败");
+        }
     }
 
 }

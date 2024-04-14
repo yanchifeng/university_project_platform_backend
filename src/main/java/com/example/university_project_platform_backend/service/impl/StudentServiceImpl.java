@@ -1,10 +1,13 @@
 package com.example.university_project_platform_backend.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.university_project_platform_backend.entity.Project;
 import com.example.university_project_platform_backend.entity.Student;
 import com.example.university_project_platform_backend.mapper.StudentMapper;
+import com.example.university_project_platform_backend.service.IProjectService;
 import com.example.university_project_platform_backend.service.IStudentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -22,6 +25,8 @@ import java.util.Map;
 @Service
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements IStudentService {
 
+    @Autowired
+    IProjectService iProjectService;
     @Override
     public boolean isStudentFormStudentID(String studentID) {
         LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper<>();
@@ -72,4 +77,14 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         }
         return null;
     }
+
+    @Override
+    public Map<String, Object> getStudentTeacherByStudentId(Long studentId) {
+        Map<String, Object> studentMap = new HashMap<>();
+        List<Student> projectList = this.baseMapper.getStudentTeacherByStudentId(studentId);
+        studentMap.put("data", projectList);
+        return studentMap;
+    }
+
+
 }

@@ -18,7 +18,6 @@ import java.util.List;
 public interface ProjectManagementMapper extends BaseMapper<ProjectManagement> {
     long studentGroupInsertAuto(StudentGroup studentGroup);
     boolean studentGroupInsert(StudentGroup studentGroup);
-    StudentGroup studentGroupSelect(Long groupId);
     List<MentorProjectDTO> projectManagementSelectByCompetitionId(MentorProjectDTO mentorProjectDTO);
 
 //    Map<String,Object> projectManagementSubmit(ProjectManagement projectManagement);

@@ -3,6 +3,7 @@
 * [university\_project\_platform\_backend](#university_project_platform_backend)
 * [接口文档](#接口文档)
   * [端口说明](#端口说明)
+  * [版本说明](#版本说明)
   * [User](#user)
     * [/user/show](#usershow)
     * [/user/login](#userlogin)
@@ -12,6 +13,7 @@
     * [/student/add](#studentadd)
     * [/student/del](#studentdel)
     * [/student/change](#studentchange)
+    * [/student/showStudentMentor](#studentshowstudentmentor)
   * [Mentor](#mentor)
     * [/mentor/show &amp; add &amp; del &amp; change](#mentorshow--add--del--change)
     * [/mentor/studentGroupShow](#mentorstudentgroupshow)
@@ -25,6 +27,8 @@
     * [/mentor/projectManagementShow](#mentorprojectmanagementshow)
     * [/mentor/projectDel](#mentorprojectdel)
     * [/mentor/projectUpdate](#mentorprojectupdate)
+    * [/mentor/showMentorStudent](#mentorshowmentorstudent)
+    * [/mentor/projectManagementSearch](#mentorprojectmanagementsearch)
   * [StudentGroup](#studentgroup)
     * [/studentGroup/show &amp; add &amp; del &amp; change](#studentgroupshow--add--del--change)
   * [Competition](#competition)
@@ -34,6 +38,9 @@
     * [/competition/projectUpdate](#competitionprojectupdate)
   * [Project](#project)
     * [/project/show](#projectshow)
+    * [/project/projectSearch](#projectprojectsearch)
+    * [/project/getProjectNew](#projectgetprojectnew)
+    * [/project/showWithData](#projectshowwithdata)
   * [Credits](#credits)
     * [/credits/show](#creditsshow)
     * [/credits/getCredits](#creditsgetcredits)
@@ -44,7 +51,10 @@
   * [ChatService](#chatservice)
     * [/chatService/\{loginName\}](#chatserviceloginname)
     * [/chatServer/sendForUser](#chatserversendforuser)
+    * [/chatServer/sendForUserList](#chatserversendforuserlist)
     * [/chatServer/getMessage](#chatservergetmessage)
+  * [HomePage](#homepage)
+    * [/studentGroup/show &amp; add &amp; del &amp; change](#studentgroupshow--add--del--change-1)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
 
@@ -58,6 +68,21 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
 | Springboot端口 | 8408 | 后端端口，数据用json |
 | mysql数据库    | 3306 | 数据库端口           |
 | Redis          | 6379 | localhost            |
+
+| 设备       | 版本     | 说明 |
+| ---------- | -------- | ---- |
+| JDK        | 21       |      |
+| Maven      | 3.9.5    |      |
+| Springboot | 3.1.0    |      |
+| Redis      | 5.0.14.1 |      |
+| Mysql      | 5.7.36   |      |
+|            |          |      |
+
+## 版本说明
+
+
+
+
 
 ## User
 
@@ -438,6 +463,43 @@ create table student(
 ```
 
 >此处判断逻辑待修改
+
+### /student/showStudentMentor
+
+`post`
+
+与/mentor/showMentorStudent逻辑同理
+
+```json
+{
+  "studentId": 12240020001
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "studentId": 12240020001,
+        "studentName": "张三",
+        "studentSex": null,
+        "studentAdmissionTime": null,
+        "studentAge": null,
+        "studentPhoneNumber": null,
+        "studentEmail": null,
+        "studentClass": null,
+        "mentorId": 11001000001,
+        "mentorName": "猴赛雷"
+      }
+    ]
+  }
+}
+```
+
+
 
 ## Mentor
 
@@ -921,6 +983,82 @@ create table mentor(
 }
 ```
 
+### /mentor/showMentorStudent
+
+`post`
+
+```json
+{
+  "studentId": "12240020001"
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "studentId": 12240020001,
+        "studentName": "张三",
+        "studentSex": null,
+        "studentAdmissionTime": null,
+        "studentAge": null,
+        "studentPhoneNumber": null,
+        "studentEmail": null,
+        "studentClass": null,
+        "mentorId": 11001000001,
+        "mentorName": "猴赛雷"
+      }
+    ]
+  }
+}
+
+```
+
+### /mentor/projectManagementSearch
+
+`post`
+
+```json
+//还可以使用
+//还可以结合 CompetitionId  GroupId   ProjectId 等限制条件混合查询
+{
+  "mentorId": 11001000001,
+  "projectStatusId": 2
+}
+```
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "projectManagementId": 2,
+        "projectId": 31000000002,
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000001,
+        "projectStatusId": 2,
+        "projectStatusDescription": "暂无"
+      },
+      {
+        "projectManagementId": 3,
+        "projectId": 31000000003,
+        "mentorId": 11001000001,
+        "competitionId": 41001000001,
+        "groupId": 22000000001,
+        "projectStatusId": 2,
+        "projectStatusDescription": "暂无"
+      }
+    ]
+  }
+}
+```
+
 
 
 ## StudentGroup
@@ -1286,6 +1424,119 @@ VALUES(31000000001,'大学生创新创业服务平台', '大学生创业创意�
 
 
 
+### /project/projectSearch
+
+`post`
+
+```json
+//以下展示的为搜索项，可随意删改
+{
+      "projectId": 31000000001,
+      "projectName": "大学生创新创业服务平台",
+      "projectCreator": 10001001001,
+      "projectScope": "高校服务",
+      "projectTag": false,
+      "projectBelong": "阳光学院"
+    }
+```
+
+
+
+### /project/getProjectNew
+
+`get` 获取记录最新的10条数据
+
+### /project/showWithData
+
+`get`
+
+显示项目详情的接口 添加个学生 老师信息名字
+
+```json
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "projectId": 31000000001,
+        "projectName": "大学生创新创业服务平台",
+        "projectIntroduction": "大学生创业创意公共服务平台是是由政府主导并投资建设的以帮助大学生就业创业为主导的公益性服务机构，是依托各级政府优惠政策及数娱广场园区资源、高校、产业、研究机构和金融机构为中心致力于打造全方位服务大学生、企业的网络服务平台。",
+        "projectCreateTime": "2024-04-13T02:00:40",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\大学生创新创业服务平台.doc",
+        "projectCreator": 10001001001,
+        "projectScope": "高校服务",
+        "projectTag": false,
+        "projectBelong": "阳光学院",
+        "groupId": 22000000001,
+        "groupName": "一窝咸鱼",
+        "mentorId": 11001000001,
+        "mentorName": "猴赛雷",
+        "studentId": null,
+        "studentName": null
+      },
+      {
+        "projectId": 31000000002,
+        "projectName": "花园宝宝电影制作",
+        "projectIntroduction": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "projectCreateTime": "2024-04-13T02:00:40",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\花园宝宝电影制作.doc",
+        "projectCreator": 10001001001,
+        "projectScope": "电影制作",
+        "projectTag": false,
+        "projectBelong": "阳光学院",
+        "groupId": 22000000001,
+        "groupName": "一窝咸鱼",
+        "mentorId": 11001000001,
+        "mentorName": "猴赛雷",
+        "studentId": null,
+        "studentName": null
+      },
+      {
+        "projectId": 31000000003,
+        "projectName": "小熊维尼图像设计",
+        "projectIntroduction": "sbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsbsbsbsbsbsbsbsbsbsbsbsbsbssbsb",
+        "projectCreateTime": "2024-04-13T02:00:40",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\小熊维尼图像设计.doc",
+        "projectCreator": 10001001002,
+        "projectScope": "图像设计",
+        "projectTag": false,
+        "projectBelong": "北京大学",
+        "groupId": 22000000001,
+        "groupName": "一窝咸鱼",
+        "mentorId": 11001000001,
+        "mentorName": "猴赛雷",
+        "studentId": null,
+        "studentName": null
+      },
+      {
+        "projectId": 31000000004,
+        "projectName": "灰太狼大战变形金刚模型设计",
+        "projectIntroduction": "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+        "projectCreateTime": "2024-04-13T02:00:40",
+        "projectEndTime": "2024-03-19T00:10:07",
+        "projectProposalLink": "C:\\graduation\\灰太狼大战变形金刚模型设计.doc",
+        "projectCreator": 10001001003,
+        "projectScope": "模型设计",
+        "projectTag": true,
+        "projectBelong": "上海交通大学",
+        "groupId": 22000000004,
+        "groupName": "烂泥扶不上墙",
+        "mentorId": 11001000001,
+        "mentorName": "猴赛雷",
+        "studentId": null,
+        "studentName": null
+      }
+    ]
+  }
+}
+```
+
+
+
 ## Credits
 
 ```json
@@ -1403,6 +1654,7 @@ VALUES (12240020001,2),(12240020002,1),(12240110001,1),(12240120001,0);
 
 ```java
 //具体调用逻辑看文件APP.HTML
+//本主要逻辑是userId向forId发送消息，内容是contentText
 const websocketUser = {
             websocketUserId : userId,
             websocketForuser: forId,
@@ -1420,17 +1672,110 @@ const websocketUser = {
                 alert('Error sending message: ' + error);
             }
         });
-```
 
 ```
-返回相关数据JSON
+
+```json
+//与此同时forId账号端收到消息
+//其中的11是UserId（发送方） 10为（接收方）
+{
+  "websocketId": null,
+  "websocketUserId": 11,
+  "websocketForuser": "10",
+  "websocketMessage": "hello websocket",
+  "websocketTime": "2024-04-11T02:18:02.7112744",
+  "userList": null
+}
+```
+
+```json
+//发送方收到接口放回数据（用于聊天记录展示）
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "websocketId": 20,
+        "websocketUserId": 10,
+        "websocketForuser": "11",
+        "websocketMessage": "hello websocket",
+        "websocketTime": "2024-04-11T02:21:12.4894101",
+        "userList": null
+      },
+      {
+        "websocketId": 20,
+        "websocketUserId": 10,
+        "websocketForuser": "11",
+        "websocketMessage": "hello websocket",
+        "websocketTime": "2024-04-11T02:21:12.4894101",
+        "userList": null
+      }
+    ]
+  }
+}
+```
+
+### /chatServer/sendForUserList
+
+`post`
+
+与 /chatServer/sendForUser 接口同理
+
+将其中发送的forId修改为以逗号为分界的字符串 `,` ，如下
+
+```
+11,12
+```
+
+后端通过，分割账号id数据，发送给账号11和12
+
+```json
+//与此同时forId账号端收到消息
+//其中的11是UserId（发送方） 10,12为（接收方）
+{
+  "websocketId": null,
+  "websocketUserId": 11,
+  "websocketForuser": "10,12",
+  "websocketMessage": "hello websocket",
+  "websocketTime": "2024-04-11T02:18:02.7112744",
+  "userList": null
+}
+```
+
+```json
+//发送方收到接口放回数据（用于聊天记录展示）
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "data": [
+      {
+        "websocketId": 20,
+        "websocketUserId": 10,
+        "websocketForuser": "11,12",
+        "websocketMessage": "hello websocket",
+        "websocketTime": "2024-04-11T02:21:12.4894101",
+        "userList": null
+      },
+      {
+        "websocketId": 20,
+        "websocketUserId": 10,
+        "websocketForuser": "11,12",
+        "websocketMessage": "hello websocket",
+        "websocketTime": "2024-04-11T02:21:12.4894101",
+        "userList": null
+      }
+    ]
+  }
+}
 ```
 
 ### /chatServer/getMessage
 
 `post`
 
-
+用户获取当前聊天数据
 
 ```json
 {
@@ -1457,3 +1802,30 @@ const websocketUser = {
 }
 ```
 
+## HomePage
+
+```mysql
+create table home_page(
+    home_page_id int auto_increment primary key ,
+    home_page_title varchar(255) not null ,
+    home_page_context text ,
+    home_page_create_time datetime default now(),
+    home_page_Creator bigint(11),
+    home_page_Creator_name varchar(255),
+    home_page_tag varchar(20)
+)
+```
+
+
+
+### /studentGroup/show & add & del & change
+
+```
+/homePage/show
+/homePage/add
+/homePage/del
+/homePage/change
+接口与Student同理 
+```
+
+> 接口与Student同理 无需权限分级

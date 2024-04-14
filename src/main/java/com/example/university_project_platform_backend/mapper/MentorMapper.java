@@ -2,6 +2,10 @@ package com.example.university_project_platform_backend.mapper;
 
 import com.example.university_project_platform_backend.entity.Mentor;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.university_project_platform_backend.entity.Project;
+import com.example.university_project_platform_backend.entity.Student;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface MentorMapper extends BaseMapper<Mentor> {
 
+    List<Student> getStudentTeacherByStudentId(Long mentorId);
 }

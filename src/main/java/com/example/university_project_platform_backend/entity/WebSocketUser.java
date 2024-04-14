@@ -5,16 +5,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
-public class WebSocketUser {
-    private String userId;
-    private String password;
-    private String message;
-    private String token;
-    private String forUser;
-
-    private LocalDateTime time;
+public class WebSocketUser extends Websocket{
+    private List<String> userList;
 }

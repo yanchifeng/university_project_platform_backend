@@ -1,10 +1,7 @@
 package com.example.university_project_platform_backend.controller;
 
 import com.example.university_project_platform_backend.controller.dto.MentorProjectDTO;
-import com.example.university_project_platform_backend.entity.Mentor;
-import com.example.university_project_platform_backend.entity.Project;
-import com.example.university_project_platform_backend.entity.ProjectManagement;
-import com.example.university_project_platform_backend.entity.StudentGroup;
+import com.example.university_project_platform_backend.entity.*;
 import com.example.university_project_platform_backend.service.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -220,6 +217,26 @@ public class MentorController {
             iProjectManagementOperationService.projectManagementOperationAdd(mentorId, mentorProjectDTO,projectManagementFlag,"/mentor/projectManagementDel");
             return JsonResult.ResultFail("删除失败 [ " + projectManagement.getProjectId() + " ] 找不到ID或数据冲突");
 
+        }
+    }
+
+    @PostMapping("/showMentorStudent")
+    public JsonResult<Map<String,Object>> studentShowStudentTeacher(@RequestBody Student student){
+        Map<String,Object> data = iMentorService.getStudentTeacherByStudentId(student.getMentorId());
+        if (data!=null){
+            return JsonResult.ResultSuccess(data);
+        }else {
+            return JsonResult.ResultFail("查询不到该数据，请检查查询参数");
+        }
+    }
+
+    @PostMapping("/projectManagementSearch")
+    public JsonResult<Map<String,Object>> projectManagementSearch(@RequestBody ProjectManagement projectManagement){
+        Map<String,Object> data = iProjectManagementService.projectManagementSearchByMentorProjectDTO(projectManagement);
+        if (data!=null){
+            return JsonResult.ResultSuccess(data);
+        }else {
+            return JsonResult.ResultFail("查询不到该数据，请检查查询参数");
         }
     }
 }

@@ -2,18 +2,20 @@ package com.example.university_project_platform_backend.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author blackhaird
- * @since 2024-04-10
+ * @since 2024-04-11
  */
 @Getter
 @Setter
@@ -71,4 +73,16 @@ public class Project implements Serializable {
      * 项目归属地
      */
     private String projectBelong;
+
+    private Long groupId;
+    private String groupName;
+
+    private Long mentorId;
+
+    private String mentorName;
+
+    private Long studentId;
+    private String studentName;
+
+
 }

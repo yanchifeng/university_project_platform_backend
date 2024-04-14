@@ -13,7 +13,7 @@ import lombok.Setter;
  * </p>
  *
  * @author blackhaird
- * @since 2024-04-10
+ * @since 2024-04-11
  */
 @Getter
 @Setter
@@ -61,4 +61,9 @@ public class Student implements Serializable {
      * 学生班级
      */
     private String studentClass;
+
+
+    private Long mentorId;
+
+    private String mentorName;
 }

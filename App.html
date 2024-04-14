@@ -10,8 +10,12 @@
 <p>msg：<input id="contentText" name="contentText" type="text" value="hello websocket"></p>
 
 <p>for:<input id="for" name="for" type="text" value="11"></p>
+
 <p>操作：<button onclick="openSocket()">开启socket</button></p>
 <p>操作：<button onclick="sendMessageFor()">发送消息</button></p>
+<p>操作：<button onclick="sendMessageForMore()">多用户发送消息</button></p>
+<h1>内容如下</h1>
+<p id="json-display"></p>
 </body>
 <script type="application/javascript">
     let socket;
@@ -58,7 +62,33 @@
             contentType: 'application/json',
             data: JSON.stringify(websocketUser),
             success: function(response) {
-                alert('Message sent successfully!');
+                const prettyJsonString = JSON.stringify(response, null, 2);
+                const jsonDisplayElement = document.getElementById('json-display');
+                jsonDisplayElement.innerHTML = '<pre>' + prettyJsonString + '</pre>';
+            },
+            error: function(xhr, status, error) {
+                alert('Error sending message: ' + error);
+            }
+        });
+    }
+    function sendMessageForMore(){
+        let userId = document.getElementById("userId").value
+        let contentText = document.getElementById('contentText').value
+        let forId = document.getElementById('for').value
+        const websocketUser = {
+            websocketUserId : userId,
+            websocketForuser: forId,
+            websocketMessage: contentText // Assuming 'massage' is the correct property name in your WebSocketUser class
+        };
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost:8408/chatServer/sendForUserList', // Adjust the URL according to your actual endpoint
+            contentType: 'application/json',
+            data: JSON.stringify(websocketUser),
+            success: function(response) {
+                const prettyJsonString = JSON.stringify(response, null, 2);
+                const jsonDisplayElement = document.getElementById('json-display');
+                jsonDisplayElement.innerHTML = '<pre>' + prettyJsonString + '</pre>';
             },
             error: function(xhr, status, error) {
                 alert('Error sending message: ' + error);
